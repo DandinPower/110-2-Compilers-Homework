@@ -1,0 +1,17 @@
+class StackCommand {
+
+   getChar(): String {
+      "Called from base class"
+   };
+
+   execute(node: StackNode): % StackNode {
+      let ret: StackNode in {
+         (new IO).out_string("Undefined execution!\n");
+         ret;
+      }
+   };
+
+   getNumber(): Int {
+      0
+   };
+};

@@ -1,0 +1,21 @@
+(* models one-dimensional cellular automaton on a circle of finite radius
+   arrays are faked as Strings,
+   X's respresent live cells, dots represent dead cells,
+   no error checking is done *)
+class StackCommand {
+
+   getChar(): String {
+      "Called from base class"
+   };
+   execute(node: StackNode): StackNode {
+      let ret: StackNode in {
+         (new IO).out_string("Undefined execution!\n");
+         ret;
+      }
+   };
+
+   getNumber(): Int {
+      0
+   };
+
+};
