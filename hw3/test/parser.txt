@@ -1,0 +1,6 @@
+class Main {
+    printer:IO;
+    main():Int {
+        printer.out_string("Hello World!\n");
+    };
+};

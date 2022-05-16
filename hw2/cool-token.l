@@ -172,7 +172,7 @@ COMMANT	--[^\n]*
 TYPE_ID	[A-Z][a-zA-Z0-9]*
 IDENTIFIER_ID	[a-z][a-zA-Z0-9]*
 OPERATOR	<=|[*-+/=]|<
-END		"END"
+END		"end"
 COMMENT_START  "(*"
 COMMENT_OVER    "*)"
 COMMENT_BODY 	([^\*\(\n]|\([^\*]|\*[^\)\*])*
