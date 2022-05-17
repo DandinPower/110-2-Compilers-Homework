@@ -34,6 +34,8 @@ false|true      {return BOOLEAN;}
 "let"   		{return LET;}
 "in"	    	{return IN;}
 "end"           {return END;}
+"@"             {return AT;}
+"~"             {return INT_COMP;}
 "<="	        {return OPERATOR;}
 "<"             {return OPERATOR;}
 [*-+/=]         {return OPERATOR;}

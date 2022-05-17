@@ -8,7 +8,9 @@ void yyerror(const char* msg) {}
 
 %token CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER LETTER TYPE_ID IDENTIFIER_ID DOT DEFINE 
 %token INHERITS SELF_TYPE ASSIGN BOOLEAN IF THEN ELSE FI NOT WHILE LOOP CASE POOL OF ESAC DO NEW ISVOID
-%token LET IN END OPERATOR DIGIT NEXT
+%token LET IN END OPERATOR DIGIT NEXT AT INT_COMP
+%right ASSIGN NOT ISVOID INT_COMP
+%left AT DOT OPERATOR
 %%
 
 program :   clist       {printf("\nDone!\n");}
@@ -18,67 +20,82 @@ clist   :   clist class SYNTAX_OVER     {printf("clist 1 ");}
         |   class SYNTAX_OVER           {printf("clist 2 ");}
         ;
 
-class   :   flist BLOCKOVER             {printf("class 1 ");}
+class   :   CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {printf("class 1 ");}
+        |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {printf("class 2 ");}
         ;
 
+flist_opt       :   flist       {printf("flist_opt 1 ");}
+                |   /*empty*/
+
 flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
-        |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART   {printf("flist 2 ");}
-        |   CLASS TYPE_ID BLOCKSTART    {printf("flist 3 ");}
+        |   feature     {printf("flist 2 ");}
         ; 
 
-feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr_list BLOCKOVER  {printf("feature 1 ");}
-        |   IDENTIFIER_ID DEFINE TYPE_ID        {printf("feature 2 ");}
+feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 1 ");}
+        |   IDENTIFIER_ID ITEMSTART ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 2 ");}
         |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr    {printf("feature 3 ");}
+        |   IDENTIFIER_ID DEFINE TYPE_ID
         ;
 
 formal_list     :   formal_list NEXT formal {printf("formal_list 1 ");}
                 |   formal      {printf("formal_list 2");}
-                |   /*empty*/   {printf("formal_list 3");}
                 ;
 
 formal  :   IDENTIFIER_ID DEFINE TYPE_ID        {printf("formal 1");}
         ;
 
-expr_list   :   expr_list expr SYNTAX_OVER      {printf("expr_list 1");}
-            |   expr SYNTAX_OVER        {printf("expr_list 2");}
-            ;
-
-expr    :   IDENTIFIER_ID DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {printf("expr 1");} 
-        |   ITEMSTART NEW TYPE_ID ITEMOVER DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {printf("expr 1");} 
-        |   IDENTIFIER_ID ITEMSTART param_list ITEMOVER         {printf("expr 2");}
-        |   IDENTIFIER_ID ASSIGN expr   {printf("expr 3");}
-        |   IF expr THEN expr ELSE expr FI      {printf("expr 4");}
-        |   WHILE expr LOOP expr POOL   {printf("expr 4");}
-        |   LET let_list IN expr        {printf("expr 5");}
-        |   CASE expr OF case_list ESAC {printf("expr 6");}
-        |   NEW TYPE_ID {printf("expr 7");}
-        |   ISVOID expr {printf("expr 8");}
-        |   expr OPERATOR expr {printf("expr 9");}
-        |   NOT expr    {printf("expr 10");}
-        |   LETTER      {printf("expr 11");}
-        |   BOOLEAN     {printf("expr 12");}
-        |   ITEMSTART expr ITEMOVER     {printf("expr 13");}
-        |   IDENTIFIER_ID       {printf("expr 14");}
-        ;
-
-let_list        :   let_list NEXT let {printf("let_list 1");}
-                |   let         {printf("let_list 2");}
-                ;       
-
-let     :       IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr        {printf("let 1");}
-        |       IDENTIFIER_ID DEFINE TYPE_ID    {printf("let 2");}
-        ;
-
-case_list       :   case_list case SYNTAX_OVER  {printf("case_list 1");}
-                |   case SYNTAX_OVER    {printf("case_list 2");}
+block_list      :   block_list expr SYNTAX_OVER         
+                |   expr SYNTAX_OVER
                 ;
 
-case    :       IDENTIFIER_ID DEFINE TYPE_ID DO expr    {printf("case 1");}
+arguments_list  :   arguments
+                |   /*empty*/
+                ;
+
+arguments       :   arguments NEXT expr 
+                |   expr
+                ;
+
+action_list     :   action_list action 
+                |   action 
+                ;
+
+action  :   IDENTIFIER_ID DEFINE TYPE_ID DO expr SYNTAX_OVER
         ;
 
-param_list      :   param_list expr     {printf("param_list 1");}
-                |   param_list expr NEXT        {printf("param_list 2");}
-                |   /* empty */ {printf("param_list 3");}
+let_expr        :   LET IDENTIFIER_ID DEFINE TYPE_ID IN expr 
+                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID
+                |   LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr 
+                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
+                ;
+
+nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr 
+                |   nest_let NEXT IDENTIFIER_ID DEFINE TYPE 
+                |   IDENTIFIER_ID DEFINE TYPE_ID IN expr IN expr 
+                |   nest_let NEXT IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
+                ;
+
+expr    :   IDENTIFIER_ID
+        |   DIGIT
+        |   BOOLEAN
+        |   LETTER
+        |   SELF 
+        |   BLOCKSTART block_list BLOCKOVER
+        |   IDENTIFIER_ID ASSIGN expr 
+        |   expr DOT IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER
+        |   expr AT TYPE_ID DOT IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER
+        |   IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER
+        |   expr OPERATOR expr 
+        |   ITEMSTART expr ITEMOVER
+        |   IF expr THEN expr ELSE expr FI 
+        |   WHILE expr LOOP expr POOL
+        |   let_expr
+        |   CASE expr OF action_list ESAC
+        |   NEW TYPE_ID
+        |   ISVOID expr 
+        |   NOT expr 
+        |   INT_COMP expr 
+        ;
 
 %%
 
