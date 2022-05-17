@@ -63,6 +63,7 @@ action_list     :   action_list action
 action  :   IDENTIFIER_ID DEFINE TYPE_ID DO expr SYNTAX_OVER
         ;
 
+/*
 let_expr        :   LET IDENTIFIER_ID DEFINE TYPE_ID IN expr 
                 |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID
                 |   LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr 
@@ -74,6 +75,7 @@ nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr
                 |   IDENTIFIER_ID DEFINE TYPE_ID IN expr IN expr 
                 |   nest_let NEXT IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
                 ;
+*/
 
 expr    :   IDENTIFIER_ID
         |   DIGIT
@@ -89,7 +91,7 @@ expr    :   IDENTIFIER_ID
         |   ITEMSTART expr ITEMOVER
         |   IF expr THEN expr ELSE expr FI 
         |   WHILE expr LOOP expr POOL
-        |   let_expr
+//        |   let_expr
         |   CASE expr OF action_list ESAC
         |   NEW TYPE_ID
         |   ISVOID expr 
