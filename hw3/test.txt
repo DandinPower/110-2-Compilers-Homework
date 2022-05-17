@@ -9,6 +9,5 @@ class Main inherits Int {
                 i <- i - 1;
             }
         pool;
-        fact;
     };
 };
