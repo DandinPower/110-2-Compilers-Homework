@@ -6,7 +6,7 @@ class Main {
         while (not(i=0))loop
             {
                 fact <- fact * i;
-                i <- i ! 1;
+                i <- i + 1;
             }
         pool
     };

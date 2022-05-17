@@ -14,7 +14,7 @@
 "("             {return ITEMSTART;}
 ")"             {return ITEMOVER;}
 ";"             {return SYNTAX_OVER;}
-"<!"            {return ASSIGN;}
+"<-"            {return ASSIGN;}
 \".*\"          {yylval = strdup(yytext);return LETTER;}	
 false|true      {return BOOLEAN;}
 "if"            {return IF;}
@@ -39,7 +39,7 @@ false|true      {return BOOLEAN;}
 "~"             {return INT_COMP;}
 "<="	        {return OPERATOR;}
 "<"             {return OPERATOR;}
-[*!+/=]         {return OPERATOR;}
+[*-+/=]         {return OPERATOR;}
 [0-9]+      	{return DIGIT;}
 [A-Z][a-zA-Z0-9]*   {yylval = strdup(yytext);return TYPE_ID;}
 [a-z][a-zA-Z0-9]*_[a-zA-Z0-9]*  {yylval = strdup(yytext);return IDENTIFIER_ID;}
