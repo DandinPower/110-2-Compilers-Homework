@@ -10,7 +10,7 @@ void yyerror(const char* msg) {}
 
 %%
 
-program :   clist
+program :   clist       {printf("Done!\n");}
         ;
 
 clist   :   clist class SYNTAX_OVER 
@@ -26,14 +26,23 @@ flist   :   flist feature SYNTAX_OVER
 
 feature :   IDENTIFIER_ID ITEMSTART ITEMOVER DEFINE TYPE_ID BLOCKSTART expr_list BLOCKOVER 
         |   IDENTIFIER_ID DEFINE TYPE_ID 
+        |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
         ;
 
 expr_list   :   expr_list expr SYNTAX_OVER
             |   expr SYNTAX_OVER 
             ;
 
-expr    :   IDENTIFIER_ID DOT IDENTIFIER_ID ITEMSTART LETTER ITEMOVER    { printf("%s\n",$5); }
+expr    :   IDENTIFIER_ID DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER    { printf("%s\n",$5); }
+        |   IF expr THEN expr ELSE expr FI
+        |   LETTER 
+        |   BOOLEAN
+        |   IDENTIFIER_ID
         ;
+
+param_list      :   param_list expr 
+                |   param_list expr NEXT 
+                |   /* empty */
 
 %%
 

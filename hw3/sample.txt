@@ -1,0 +1,32 @@
+rule 1    program -> c_list
+rule 2    c_list -> class SEMICOLON
+rule 3    c_list -> c_list class SEMICOLON
+rule 4    class -> feature_list END
+rule 5    feature_list -> CLASS TYPEID IS
+rule 6    feature_list -> feature_list feature SEMICOLON
+rule 7    @1 ->		/* empty */
+rule 8    feature -> ID LPAREN formal_list RPAREN DOTS TYPEID IS @1 expr_list END
+rule 9    feature -> ID DOTS TYPEID
+rule 10   feature -> ID DOTS TYPEID ASSIGN expr
+rule 11   formal_list -> formal_list formal
+rule 12   formal_list -> formal_list formal COLON
+rule 13   formal_list ->		/* empty */
+rule 14   formal -> ID DOTS TYPEID
+
+rule 15   expr -> ID ASSIGN expr
+rule 16   expr -> ID DOT ID LPAREN param_list RPAREN
+rule 17   expr -> IF expr THEN expr ELSE expr FI
+rule 18   expr -> WHILE expr LOOP expr POOL
+rule 19   expr -> BEGIN expr_list END
+rule 20   expr -> NOT expr
+rule 21   expr -> ID
+rule 22   expr -> NUMBER
+rule 23   expr -> TRUE
+rule 24   expr -> FALSE
+rule 25   expr -> PRINT STRING
+
+rule 26   param_list -> param_list expr
+rule 27   param_list -> param_list expr COLON
+rule 28   param_list ->		/* empty */
+rule 29   expr_list -> expr SEMICOLON
+rule 30   expr_list -> expr_list expr SEMICOLON
