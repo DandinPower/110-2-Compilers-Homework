@@ -56,7 +56,7 @@ expr    :   object DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {print
         |   NOT expr    {printf("expr 10");}
         |   LETTER      {printf("expr 11");}
         |   BOOLEAN     {printf("expr 12");}
-        |   ITEMSTART expr ITEMOVER     {printf("expr 13");
+        |   ITEMSTART expr ITEMOVER     {printf("expr 13");}
         |   IDENTIFIER_ID       {printf("expr 14");}
         ;
 
