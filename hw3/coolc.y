@@ -28,7 +28,7 @@ flist_opt       :   flist       {printf("flist_opt 1 ");}
                 |   /*empty*/
 
 flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
-        |   feature     {printf("flist 2 ");}
+        |   feature SYNTAX_OVER     {printf("flist 2 ");}
         ; 
 
 feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 1 ");}
