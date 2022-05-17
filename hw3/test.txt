@@ -2,11 +2,8 @@ class Main {
     fact(i:Int):Int {
         while (not(i=0))loop
             {
-                fact <- (fact * i);
                 i <- (i - 1);
             }
         pool
     };
 };
-
-formal 1formal_list 2expr 1 expr 2 expr 11 expr 12 expr 18 expr 12 expr 1 expr 1 expr 11 expr 7 block_list 2 -expr 1 expr 7
