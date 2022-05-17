@@ -44,8 +44,8 @@ formal_list     :   formal_list NEXT formal {printf("formal_list 1 ");}
 formal  :   IDENTIFIER_ID DEFINE TYPE_ID        {printf("formal 1");}
         ;
 
-block_list      :   block_list expr SYNTAX_OVER         {printf("block_list 1");}
-                |   expr SYNTAX_OVER    {printf("block_list 2");}
+block_list      :   block_list expr SYNTAX_OVER         {printf("block_list 1 ");}
+                |   expr SYNTAX_OVER    {printf("block_list 2 ");}
                 ;
 
 arguments_list  :   arguments   {printf("arguments_list 1 ");}
