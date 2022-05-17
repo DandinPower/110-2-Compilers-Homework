@@ -1,0 +1,14 @@
+class Main inherits Int {
+    main():Object {
+        (new IO).out_string("test")
+    };
+    fact(i:Int):Int {
+        while (not(i=0))loop
+            {
+                fact <- fact * i;
+                i <- i - 1;
+            }
+        pool;
+        fact;
+    };
+};
