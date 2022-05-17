@@ -34,8 +34,8 @@ false|true      {return BOOLEAN;}
 "let"   		{return LET;}
 "in"	    	{return IN;}
 "end"           {return END;}
-<=	            {return OPERATOR;}
-<               {return OPERATOR;}
+"<="	        {return OPERATOR;}
+"<"             {return OPERATOR;}
 [*-+/=]         {return OPERATOR;}
 [0-9]+      	{return DIGIT;}
 [A-Z][a-zA-Z0-9]*   {yylval = strdup(yytext);return TYPE_ID;}

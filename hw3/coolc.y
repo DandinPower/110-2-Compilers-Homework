@@ -34,7 +34,7 @@ expr_list   :   expr_list expr SYNTAX_OVER
             |   expr SYNTAX_OVER 
             ;
 
-expr    :   IDENTIFIER_ID DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER    { printf("%s\n",$5); }
+expr    :   IDENTIFIER_ID DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER 
         |   IF expr THEN expr ELSE expr FI
         |   LETTER 
         |   BOOLEAN
