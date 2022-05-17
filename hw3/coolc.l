@@ -14,7 +14,7 @@
 "("             {return ITEMSTART;}
 ")"             {return ITEMOVER;}
 ";"             {return SYNTAX_OVER;}
-"<-"            {return ASSIGN;}
+"<!"            {return ASSIGN;}
 \".*\"          {yylval = strdup(yytext);return LETTER;}	
 false|true      {return BOOLEAN;}
 "if"            {return IF;}
