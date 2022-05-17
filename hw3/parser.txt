@@ -1,5 +1,12 @@
-class Main {
+class Test inherits IO{
     printer:IO;
+    main():Int {
+        printer.out_string("Hello World!\n");
+    };
+};
+
+class Main {
+    printer:Test;
     main():Int {
         printer.out_string("Hello World!\n");
     };
