@@ -8,6 +8,6 @@ class Main inherits Int {
                 fact <- fact * i;
                 i <- i - 1;
             }
-        pool;
+        pool
     };
 };
