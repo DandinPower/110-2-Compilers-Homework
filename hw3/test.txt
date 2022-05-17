@@ -1,7 +1,4 @@
-class Main inherits Int {
-    main():Object {
-        (new IO).out_string("test")
-    };
+class Main {
     fact(i:Int):Int {
         while (not(i=0))loop
             {
