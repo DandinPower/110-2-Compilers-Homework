@@ -43,7 +43,8 @@ expr_list   :   expr_list expr SYNTAX_OVER      {printf("expr_list 1");}
             |   expr SYNTAX_OVER        {printf("expr_list 2");}
             ;
 
-expr    :   object DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {printf("expr 1");} 
+expr    :   IDENTIFIER_ID DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {printf("expr 1");} 
+        |   ITEMSTART NEW TYPE_ID ITEMOVER DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {printf("expr 1");} 
         |   IDENTIFIER_ID ITEMSTART param_list ITEMOVER         {printf("expr 2");}
         |   IDENTIFIER_ID ASSIGN expr   {printf("expr 3");}
         |   IF expr THEN expr ELSE expr FI      {printf("expr 4");}
@@ -58,10 +59,6 @@ expr    :   object DOT IDENTIFIER_ID ITEMSTART param_list ITEMOVER        {print
         |   BOOLEAN     {printf("expr 12");}
         |   ITEMSTART expr ITEMOVER     {printf("expr 13");}
         |   IDENTIFIER_ID       {printf("expr 14");}
-        ;
-
-object  :   IDENTIFIER_ID       {printf("object 1 ");}
-        |   ITEMSTART NEW TYPE_ID ITEMOVER     {printf("object 2 ");}
         ;
 
 let_list        :   let_list NEXT let {printf("let_list 1");}
