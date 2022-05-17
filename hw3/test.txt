@@ -2,7 +2,7 @@ class Main {
     fact(i:Int):Int {
         while (not(i=0))loop
             {
-                fact <- fact * i;
+                fact <- (fact * i);
                 i <- (i - 1);
             }
         pool
