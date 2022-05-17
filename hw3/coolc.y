@@ -20,21 +20,17 @@ clist   :   clist class SYNTAX_OVER     {printf("clist 1 ");}
         |   class SYNTAX_OVER           {printf("clist 2 ");}
         ;
 
-class   :   CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {printf("class 1 ");}
-        |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {printf("class 2 ");}
+class   :   flist BLOCKOVER             {printf("class 1 ");}
         ;
 
-flist_opt       :   flist       {printf("flist_opt 1 ");}
-                |   /*empty*/
-
 flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
-        |   feature SYNTAX_OVER     {printf("flist 2 ");}
+        |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART   {printf("flist 2 ");}
+        |   CLASS TYPE_ID BLOCKSTART    {printf("flist 3 ");}
         ; 
 
-feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 1 ");}
-        |   IDENTIFIER_ID ITEMSTART ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 2 ");}
+feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr_list BLOCKOVER  {printf("feature 1 ");}
+        |   IDENTIFIER_ID DEFINE TYPE_ID        {printf("feature 2 ");}
         |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr    {printf("feature 3 ");}
-        |   IDENTIFIER_ID DEFINE TYPE_ID        {printf("feature 4 ");}
         ;
 
 formal_list     :   formal_list NEXT formal {printf("formal_list 1 ");}
