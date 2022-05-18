@@ -64,11 +64,11 @@ action  :   IDENTIFIER_ID DEFINE TYPE_ID DO expr SYNTAX_OVER    {printf("action 
         ;
 
 
-let_expr        :   LET IDENTIFIER_ID DEFINE TYPE_ID IN expr    
+//let_expr        :   LET IDENTIFIER_ID DEFINE TYPE_ID IN expr    
 //                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID
-                |   LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr 
+//                |   LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr 
 //                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
-                ;
+//                ;
 /*
 nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr 
                 |   nest_let NEXT IDENTIFIER_ID DEFINE TYPE_ID
@@ -77,6 +77,9 @@ nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr
                 ;
 */
 
+let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN expr
+                |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr
+                ;
 
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   DIGIT               {printf("expr 2 ");}
@@ -92,7 +95,8 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   ITEMSTART expr ITEMOVER     {printf("expr 12 ");}
         |   IF expr THEN expr ELSE expr FI      {printf("expr 13 ");} 
         |   WHILE expr LOOP expr POOL   {printf("expr 14 ");}
-        |   let_expr
+//        |   let_expr
+        |   LET let_action
         |   CASE expr OF action_list ESAC       {printf("expr 15 ");}
         |   NEW TYPE_ID         {printf("expr 16 ");}
         |   ISVOID expr         {printf("expr 17 ");}
