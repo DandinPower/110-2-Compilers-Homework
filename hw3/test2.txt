@@ -1,7 +1,16 @@
 class Main {
-    main():Int {
-        let fact Int <- 1 in {
-            true;
+    main():Object {
+        (new IO).out_string("test")
+    };
+    fact(i:Int):Int {
+        let fact : Int <- 1 in {
+            while (not(i=0))loop
+            {
+                fact <- fact * i;
+                i <- i + 1;
+            }
+            pool;
+            fact;
         }
     };
 };
