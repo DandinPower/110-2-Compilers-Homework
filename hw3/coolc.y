@@ -77,8 +77,8 @@ nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr
                 ;
 */
 
-let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN expr
-                |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr
+let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKOVER
+                |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN BLOCKSTART block_list BLOCKOVER
                 ;
 
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
