@@ -1,8 +1,5 @@
 class Main {
-    main():Object {
-        (new IO).out_string("test")
-    };
-    fact(i:Int):Int {
+    main():Int {
         let fact Int <- 1 in {
             true;
         }
