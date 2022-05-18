@@ -65,16 +65,17 @@ action  :   IDENTIFIER_ID DEFINE TYPE_ID DO expr SYNTAX_OVER    {printf("action 
 
 
 let_expr        :   LET IDENTIFIER_ID DEFINE TYPE_ID IN expr    
-                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID
+//                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID
                 |   LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN expr 
-                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
+//                |   nest_let NEXT LET IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
                 ;
-
+/*
 nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr 
                 |   nest_let NEXT IDENTIFIER_ID DEFINE TYPE_ID
                 |   IDENTIFIER_ID DEFINE TYPE_ID IN expr IN expr 
                 |   nest_let NEXT IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr 
                 ;
+*/
 
 
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
