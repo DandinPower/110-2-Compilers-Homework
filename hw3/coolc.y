@@ -77,8 +77,8 @@ nest_let        :   IDENTIFIER_ID DEFINE TYPE_ID IN expr
                 ;
 */
 
-let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKOVER
-                |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN BLOCKSTART block_list BLOCKOVER
+let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKOVER     {printf("let_action 1 ");}
+                |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN BLOCKSTART block_list BLOCKOVER         {printf("let_action 2 ");}
                 ;
 
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
@@ -96,12 +96,12 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   IF expr THEN expr ELSE expr FI      {printf("expr 13 ");} 
         |   WHILE expr LOOP expr POOL   {printf("expr 14 ");}
 //        |   let_expr
-        |   LET let_action
-        |   CASE expr OF action_list ESAC       {printf("expr 15 ");}
-        |   NEW TYPE_ID         {printf("expr 16 ");}
-        |   ISVOID expr         {printf("expr 17 ");}
-        |   NOT expr            {printf("expr 18 ");}
-        |   INT_COMP expr       {printf("expr 19 ");}
+        |   LET let_action      {printf("expr 15 ");}
+        |   CASE expr OF action_list ESAC       {printf("expr 16 ");}
+        |   NEW TYPE_ID         {printf("expr 17 ");}
+        |   ISVOID expr         {printf("expr 18 ");}
+        |   NOT expr            {printf("expr 19 ");}
+        |   INT_COMP expr       {printf("expr 20 ");}
         ;
 
 %%
