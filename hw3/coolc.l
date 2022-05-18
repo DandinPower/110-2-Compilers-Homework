@@ -5,6 +5,7 @@
 
 %%
 
+"-"             {return OPERATOR;}
 [ \t\v\f\r\n]*  {}
 "class"         {return CLASS;}
 "inherits"	    {return INHERITS;}
@@ -39,7 +40,7 @@ false|true      {return BOOLEAN;}
 "~"             {return INT_COMP;}
 "<="	        {return OPERATOR;}
 "<"             {return OPERATOR;}
-[*-+/=]         {return OPERATOR;}
+[*+/=]         {return OPERATOR;}
 [0-9]+      	{return DIGIT;}
 [A-Z][a-zA-Z0-9]*   {yylval = strdup(yytext);return TYPE_ID;}
 [a-z][a-zA-Z0-9]*_[a-zA-Z0-9]*  {yylval = strdup(yytext);return IDENTIFIER_ID;}
