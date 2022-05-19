@@ -8,7 +8,7 @@ class List inherits IO {
 
 	cons(hd : Int) : Cons {
 	    (let new_cell : Cons <- new Cons in {
-                new_cell.init(hd,self)
+                new_cell.init(hd,self);
             }
 	    )
 	};
