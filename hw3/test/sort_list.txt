@@ -1,4 +1,4 @@
-Class List inherits IO { 
+class List inherits IO { 
 	isNil() : Bool { 
 		{ 
 			abort(); 
@@ -28,7 +28,7 @@ Class List inherits IO {
 	print_list() : Object { abort() };
 };
 
-Class Cons inherits List {
+class Cons inherits List {
 	xcar : Int; 
 	xcdr : List; 
 	isNil() : Bool { false };
@@ -69,7 +69,7 @@ Class Cons inherits List {
 	};
 };
 
-Class Nil inherits List {
+class Nil inherits List {
 	isNil() : Bool { true };
 
         rev() : List { self };
@@ -85,7 +85,7 @@ Class Nil inherits List {
 };
 
 
-Class Main inherits IO {
+class Main inherits IO {
 
 	l : List;
 	iota(i : Int) : List {
