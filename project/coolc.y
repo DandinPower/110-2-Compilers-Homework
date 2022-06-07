@@ -3,13 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 void yyerror(const char* msg) {}
+
+struct {
+        char *text;
+}AstNode;
+
 %}
 
 %union 
 {
-        struct {
-                char *text;
-        }AstNode;
+        AstNode node;        
 }
 %token <AstNode> LETTER
 %token <AstNode> CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER TYPE_ID IDENTIFIER_ID DOT DEFINE 
