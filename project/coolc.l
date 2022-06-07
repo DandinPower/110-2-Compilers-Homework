@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "y.tab.h"
+
+struct AstNode {
+        char *text;
+}; 
+
 %}
 
 %%

@@ -5,7 +5,7 @@
 
 struct AstNode {
         char *text;
-};
+}; 
 
 typedef struct AstNode AstNode;
 
