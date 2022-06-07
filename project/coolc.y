@@ -2,26 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-struct AstNode {
-        char *text;
-}; 
-
-typedef struct AstNode AstNode;
-
-AstNode LetterList[100];
-
 void yyerror(const char* msg) {}
 %}
 
 %union 
 {
-        AstNode node;
+        struct {
+                char *text;
+        }AstNode;
+}; 
 }
-%token <node> LETTER
-%token <node> CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER TYPE_ID IDENTIFIER_ID DOT DEFINE 
-%token <node> INHERITS SELF_TYPE ASSIGN BOOLEAN IF THEN ELSE FI NOT WHILE LOOP CASE POOL OF ESAC DO NEW ISVOID
-%token <node> LET IN END OPERATOR DIGIT NEXT AT INT_COMP SELF
+%token <AstNode> LETTER
+%token <AstNode> CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER TYPE_ID IDENTIFIER_ID DOT DEFINE 
+%token <AstNode> INHERITS SELF_TYPE ASSIGN BOOLEAN IF THEN ELSE FI NOT WHILE LOOP CASE POOL OF ESAC DO NEW ISVOID
+%token <AstNode> LET IN END OPERATOR DIGIT NEXT AT INT_COMP SELF
 %right ASSIGN NOT ISVOID INT_COMP
 %left AT DOT OPERATOR
 %%
