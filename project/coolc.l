@@ -6,49 +6,49 @@
 
 %%
 
-"-"             {yylval.node.text = strdup(yytext);return OPERATOR;}
+"-"             {strcpy(yylval.node.text,(yytext));return OPERATOR;}
 [ \t\v\f\r\n]*  {}
-"class"         {yylval.node.text = strdup(yytext);return CLASS;}
-"inherits"	    {yylval.node.text = strdup(yytext);return INHERITS;}
-"SELF_TYPE"	    {yylval.node.text = strdup(yytext);return SELF_TYPE;}
-"{"             {yylval.node.text = strdup(yytext);return BLOCKSTART;}
-"}"             {yylval.node.text = strdup(yytext);return BLOCKOVER;}
-"("             {yylval.node.text = strdup(yytext);return ITEMSTART;}
-")"             {yylval.node.text = strdup(yytext);return ITEMOVER;}
-";"             {yylval.node.text = strdup(yytext);return SYNTAX_OVER;}
-"<-"            {yylval.node.text = strdup(yytext);return ASSIGN;}
-\".*\"          {yylval.node.text = strdup(yytext);return LETTER;}	
-false|true      {yylval.node.text = strdup(yytext);return BOOLEAN;}
-"if"            {yylval.node.text = strdup(yytext);return IF;}
-"then"          {yylval.node.text = strdup(yytext);return THEN;}
-"else"          {yylval.node.text = strdup(yytext);return ELSE;}
-"fi"            {yylval.node.text = strdup(yytext);return FI;}
-"not"   	    {yylval.node.text = strdup(yytext);return NOT;}
-"while"     	{yylval.node.text = strdup(yytext);return WHILE;}
-"loop"	    	{yylval.node.text = strdup(yytext);return LOOP;}
-"case" 	        {yylval.node.text = strdup(yytext);return CASE;}
-"pool"  		{yylval.node.text = strdup(yytext);return POOL;}
-"of"	    	{yylval.node.text = strdup(yytext);return OF;}
-"esac"	    	{yylval.node.text = strdup(yytext);return ESAC;}
-"=>"		    {yylval.node.text = strdup(yytext);return DO;}
-"new"	    	{yylval.node.text = strdup(yytext);return NEW;}
-"isvoid"	    {yylval.node.text = strdup(yytext);return ISVOID;}
-"let"   		{yylval.node.text = strdup(yytext);return LET;}
-"in"	    	{yylval.node.text = strdup(yytext);return IN;}
-"end"           {yylval.node.text = strdup(yytext);return END;}
-"self"          {yylval.node.text = strdup(yytext);return SELF;}
-"@"             {yylval.node.text = strdup(yytext);return AT;}
-"~"             {yylval.node.text = strdup(yytext);return INT_COMP;}
-"<="	        {yylval.node.text = strdup(yytext);return OPERATOR;}
-"<"             {yylval.node.text = strdup(yytext);return OPERATOR;}
-[*+/=]          {yylval.node.text = strdup(yytext);return OPERATOR;}
-[0-9]+      	{yylval.node.text = strdup(yytext);return DIGIT;}
-[A-Z][a-zA-Z0-9]*   {yylval.node.text = strdup(yytext);return TYPE_ID;}
-[a-z][a-zA-Z0-9]*_[a-zA-Z0-9]*  {yylval.node.text = strdup(yytext);return IDENTIFIER_ID;}
-[a-z][a-zA-Z0-9]*   {yylval.node.text = strdup(yytext);return IDENTIFIER_ID;}
-"."             {yylval.node.text = strdup(yytext);return DOT;}
-","             {yylval.node.text = strdup(yytext);return NEXT;}
-":"             {yylval.node.text = strdup(yytext);return DEFINE;}
+"class"         {strcpy(yylval.node.text,(yytext));return CLASS;}
+"inherits"	    {strcpy(yylval.node.text,(yytext));return INHERITS;}
+"SELF_TYPE"	    {strcpy(yylval.node.text,(yytext));return SELF_TYPE;}
+"{"             {strcpy(yylval.node.text,(yytext));return BLOCKSTART;}
+"}"             {strcpy(yylval.node.text,(yytext));return BLOCKOVER;}
+"("             {strcpy(yylval.node.text,(yytext));return ITEMSTART;}
+")"             {strcpy(yylval.node.text,(yytext));return ITEMOVER;}
+";"             {strcpy(yylval.node.text,(yytext));return SYNTAX_OVER;}
+"<-"            {strcpy(yylval.node.text,(yytext));return ASSIGN;}
+\".*\"          {strcpy(yylval.node.text,(yytext));return LETTER;}	
+false|true      {strcpy(yylval.node.text,(yytext));return BOOLEAN;}
+"if"            {strcpy(yylval.node.text,(yytext));return IF;}
+"then"          {strcpy(yylval.node.text,(yytext));return THEN;}
+"else"          {strcpy(yylval.node.text,(yytext));return ELSE;}
+"fi"            {strcpy(yylval.node.text,(yytext));return FI;}
+"not"   	    {strcpy(yylval.node.text,(yytext));return NOT;}
+"while"     	{strcpy(yylval.node.text,(yytext));return WHILE;}
+"loop"	    	{strcpy(yylval.node.text,(yytext));return LOOP;}
+"case" 	        {strcpy(yylval.node.text,(yytext));return CASE;}
+"pool"  		{strcpy(yylval.node.text,(yytext));return POOL;}
+"of"	    	{strcpy(yylval.node.text,(yytext));return OF;}
+"esac"	    	{strcpy(yylval.node.text,(yytext));return ESAC;}
+"=>"		    {strcpy(yylval.node.text,(yytext));return DO;}
+"new"	    	{strcpy(yylval.node.text,(yytext));return NEW;}
+"isvoid"	    {strcpy(yylval.node.text,(yytext));return ISVOID;}
+"let"   		{strcpy(yylval.node.text,(yytext));return LET;}
+"in"	    	{strcpy(yylval.node.text,(yytext));return IN;}
+"end"           {strcpy(yylval.node.text,(yytext));return END;}
+"self"          {strcpy(yylval.node.text,(yytext));return SELF;}
+"@"             {strcpy(yylval.node.text,(yytext));return AT;}
+"~"             {strcpy(yylval.node.text,(yytext));return INT_COMP;}
+"<="	        {strcpy(yylval.node.text,(yytext));return OPERATOR;}
+"<"             {strcpy(yylval.node.text,(yytext));return OPERATOR;}
+[*+/=]          {strcpy(yylval.node.text,(yytext));return OPERATOR;}
+[0-9]+      	{strcpy(yylval.node.text,(yytext));return DIGIT;}
+[A-Z][a-zA-Z0-9]*   {strcpy(yylval.node.text,(yytext));return TYPE_ID;}
+[a-z][a-zA-Z0-9]*_[a-zA-Z0-9]*  {strcpy(yylval.node.text,(yytext));return IDENTIFIER_ID;}
+[a-z][a-zA-Z0-9]*   {strcpy(yylval.node.text,(yytext));return IDENTIFIER_ID;}
+"."             {strcpy(yylval.node.text,(yytext));return DOT;}
+","             {strcpy(yylval.node.text,(yytext));return NEXT;}
+":"             {strcpy(yylval.node.text,(yytext));return DEFINE;}
 
 %%
 
