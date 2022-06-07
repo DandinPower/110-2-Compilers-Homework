@@ -2,13 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+struct AstNode {
+        char *text;
+};
+
+typedef struct AstNode AstNode;
+
 void yyerror(const char* msg) {}
 %}
 
 %union 
 {
-        int number;
-        char *string;
+        AstNode node;
 }
 
 %token CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER LETTER TYPE_ID IDENTIFIER_ID DOT DEFINE 
