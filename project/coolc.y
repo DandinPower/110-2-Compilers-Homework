@@ -2,7 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define YYSTYPE char *
+%union 
+{
+        int number;
+        char *string;
+}
 void yyerror(const char* msg) {}
 %}
 
@@ -84,7 +88,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   DIGIT               {printf("expr 2 ");}
         |   BOOLEAN             {printf("expr 3 ");}
-        |   LETTER              {printf("expr 4 ");}
+        |   LETTER              {printf("expr 4 ");printf("%s \n",$1.string)}
         |   SELF                {printf("expr 5 ");}
         |   BLOCKSTART block_list BLOCKOVER     {printf("expr 6 ");}
         |   IDENTIFIER_ID ASSIGN expr           {printf("expr 7 ");}
