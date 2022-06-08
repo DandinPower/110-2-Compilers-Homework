@@ -3,18 +3,26 @@
 #include <stdlib.h>
 #include <string.h>
 void yyerror(const char* msg) {}
+
+struct syntax {
+        char text[80];
+        leaf *leftPtr;
+        leaf *rightPtr;
+} leaf;
+
+
 %}
 
 %union 
 {
-        struct ast {
-                char text[80];
-        }node;
+        struct yylvalNode {
+                leaf node;
+        }object;
 }
-%token <node> LETTER
-%token <node> CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER TYPE_ID IDENTIFIER_ID DOT DEFINE 
-%token <node> INHERITS SELF_TYPE ASSIGN BOOLEAN IF THEN ELSE FI NOT WHILE LOOP CASE POOL OF ESAC DO NEW ISVOID
-%token <node> LET IN END OPERATOR DIGIT NEXT AT INT_COMP SELF
+%token <object> LETTER
+%token <object> CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER TYPE_ID IDENTIFIER_ID DOT DEFINE 
+%token <object> INHERITS SELF_TYPE ASSIGN BOOLEAN IF THEN ELSE FI NOT WHILE LOOP CASE POOL OF ESAC DO NEW ISVOID
+%token <object> LET IN END OPERATOR DIGIT NEXT AT INT_COMP SELF
 %right ASSIGN NOT ISVOID INT_COMP
 %left AT DOT OPERATOR
 %%
@@ -90,7 +98,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   DIGIT               {printf("expr 2 ");}
         |   BOOLEAN             {printf("expr 3 ");}
-        |   LETTER              {printf("expr 4 ");printf("%s \n",$1.text);}
+        |   LETTER              {printf("expr 4 ");printf("%s \n",$1.node.text);}
         |   SELF                {printf("expr 5 ");}
         |   BLOCKSTART block_list BLOCKOVER     {printf("expr 6 ");}
         |   IDENTIFIER_ID ASSIGN expr           {printf("expr 7 ");}
