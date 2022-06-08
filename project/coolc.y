@@ -73,7 +73,7 @@ void ShowList(SymbolNode *ptr,char *name){
 	printf("%s: ",name);
 	int i=0;
 	while(ptr!=NULL && strcmp(ptr->text,NONE)){
-		printf("[%d]: %s",i,ptr->data); //印出節點的資料 
+		printf("[%d]: %s",i,ptr->text); //印出節點的資料 
 		if (ptr->next!=NULL)printf(",");
 		ptr=ptr->next;  //將ptr指向下一個節點 
 		i++;
@@ -82,8 +82,8 @@ void ShowList(SymbolNode *ptr,char *name){
 }
 
 
-SymbolNode *Identifiers = GetFirstNode();
-SymbolNode *Strings = GetFirstNode();
+SymbolNode *Identifiers;
+SymbolNode *Strings;
 
 %}
 
@@ -196,5 +196,7 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
 %%
 
 int main() {
+    Identifiers = GetFirstNode();
+    Strings = GetFirstNode();
     return yyparse();
 }
