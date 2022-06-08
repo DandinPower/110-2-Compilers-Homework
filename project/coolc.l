@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#define TEXT_LENGTH 80
 #include "y.tab.h"
 %}
 
