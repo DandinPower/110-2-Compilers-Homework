@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define TEXT_LENGTH 80
+#define NONE "-99999"
 void yyerror(const char* msg) {}
 
 /* 以下為建立syntax tree的data structure */
