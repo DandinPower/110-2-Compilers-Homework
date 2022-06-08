@@ -2,6 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 #define TEXT_LENGTH 80
+/* 以下為建立syntax tree的data structure */
+struct tree_node {
+        char text[TEXT_LENGTH];
+        char token[TEXT_LENGTH];
+        struct tree_node *leftPtr;
+        struct tree_node *rightPtr;
+};
+typedef struct tree_node TreeNode;
+
 #include "y.tab.h"
 %}
 
