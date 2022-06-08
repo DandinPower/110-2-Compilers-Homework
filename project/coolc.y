@@ -5,13 +5,84 @@
 #define TEXT_LENGTH 80
 void yyerror(const char* msg) {}
 
-struct leaf_node {
+/* 以下為建立syntax tree的data structure */
+struct tree_node {
         char text[TEXT_LENGTH];
         char token[TEXT_LENGTH];
-        struct leaf *leftPtr;
-        struct leaf *rightPtr;
+        struct tree_node *leftPtr;
+        struct tree_node *rightPtr;
 };
+typedef struct tree_node TreeNode;
 
+TreeNode *root;
+
+/* 以下為建立symbol table的data structure */
+
+struct symbol_node {
+        char text[TEXT_LENGTH];
+        struct symbol_node *next;
+};
+typedef struct symbol_node SymbolNode;
+
+SymbolNode *GetFirstNode(){
+	SymbolNode *newNode = NULL;
+	newNode = malloc(sizeof(SymbolNode));
+	sprintf(newNode->text,"%s",NONE);
+	newNode->next = NULL;
+	return newNode;
+}
+
+SymbolNode *GetNewNode(char *data){
+	SymbolNode *newNode = NULL;
+	newNode = malloc(sizeof(SymbolNode));
+	sprintf(newNode->text,"%s",data);
+	newNode->next = NULL;
+	return newNode;
+}
+
+int CheckData(SymbolNode *List,char *data){
+	SymbolNode *ptr = List;
+	int isSame = -1;
+	int i=0;
+	while(ptr!=NULL){
+	  	if (strcmp(data,ptr->text)==0)isSame = i;
+	  	ptr=ptr->next;
+	  	i++;
+	}
+	return isSame;
+}
+
+void AddData(SymbolNode *List,char *text){
+	SymbolNode *ptr = List;
+	if (CheckData(List,text)!=-1)return;
+	if (strcmp(ptr->text,NONE)==0){
+		sprintf(ptr->text,"%s",text);
+		ptr->next = NULL;
+	}
+	else{	
+		while(ptr->next!=NULL){
+	  		ptr=ptr->next;
+	  	}
+	  	SymbolNode *newNode = GetNewNode(text);
+	  	ptr->next = newNode;
+	}
+}
+
+void ShowList(SymbolNode *ptr,char *name){
+	printf("%s: ",name);
+	int i=0;
+	while(ptr!=NULL && strcmp(ptr->text,NONE)){
+		printf("[%d]: %s",i,ptr->data); //印出節點的資料 
+		if (ptr->next!=NULL)printf(",");
+		ptr=ptr->next;  //將ptr指向下一個節點 
+		i++;
+	}
+	printf("\n");
+}
+
+
+SymbolNode *Identifiers = GetFirstNode();
+SymbolNode *Strings = GetFirstNode();
 
 %}
 
@@ -19,7 +90,7 @@ struct leaf_node {
 {
         struct yylvalNode {
                 char text[TEXT_LENGTH];
-                struct leaf *node;
+                TreeNode *node;
         }object;
 }
 %token <object> LETTER
@@ -30,7 +101,7 @@ struct leaf_node {
 %left AT DOT OPERATOR
 %%
 
-program :   clist       {printf("\nDone!\n");}
+program :   clist       {printf("\nDone!\n");ShowList(Strings,"LETTER");}
         ;
 
 clist   :   clist class SYNTAX_OVER     {printf("clist 1 ");}
@@ -101,7 +172,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
 expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   DIGIT               {printf("expr 2 ");}
         |   BOOLEAN             {printf("expr 3 ");}
-        |   LETTER              {printf("expr 4 ");printf("%s \n",$1.text);}
+        |   LETTER              {printf("expr 4 ");printf("%s \n",$1.text);AddData(Strings,$1.text);}
         |   SELF                {printf("expr 5 ");}
         |   BLOCKSTART block_list BLOCKOVER     {printf("expr 6 ");}
         |   IDENTIFIER_ID ASSIGN expr           {printf("expr 7 ");}

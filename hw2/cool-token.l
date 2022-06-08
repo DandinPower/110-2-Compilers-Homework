@@ -63,7 +63,6 @@ Node *GetNewNode(char *data){
 	sprintf(newNode->data,"%s",data);
 	newNode->next = NULL;
 	return newNode;
-
 }
 
 int CheckData(Node *List,char *data){
