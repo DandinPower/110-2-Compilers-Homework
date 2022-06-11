@@ -297,7 +297,7 @@ void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int 
 
 void TraverseTree(TreeNode *node){
         printf("%s, ", node->text);
-        if(node->child_head != NULL) TraverseTree(node->childHead);
+        if(node->child_head != NULL) TraverseTree(node->child_head);
         if(node->next != NULL) TraverseTree(node->next);
 }
 
