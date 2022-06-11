@@ -8,21 +8,47 @@ void yyerror(const char* msg) {}
 
 /* 以下為建立syntax tree的data structure */
 struct tree_node {
-        char text[TEXT_LENGTH];
-        char token[TEXT_LENGTH];
-        struct tree_node *leftPtr;
-        struct tree_node *rightPtr;
+        char type[TEXT_LENGTH];  //紀錄nonterminal,Class,TypeID....
+        char text[TEXT_LENGTH];  //紀錄yytext
+        char grammar_type[TEXT_LENGTH]; //紀錄用了哪個文法規則
+        int grammar_number;     //紀錄用了文法規則的第幾個
+        struct tree_node *child_head;   //記錄了所有子節點的開頭
+        struct tree_node *next; //串接到下一個
 };
 typedef struct tree_node TreeNode;
 
 TreeNode *root;
+
+TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number){
+        TreeNode *newNode = malloc(sizeof(TreeNode));
+        sprintf(newNode->type,"%s",type);
+        sprintf(newNode->text,"%s",text);
+        sprintf(newNode->grammar_type,"%s",grammar_type);
+        newNode->grammar_number = grammar_number;
+        newNode->child_head = NULL;
+        newNode->next = NULL;
+        return newNode;
+}
+
+void SetFatherNode(TreeNode *node, TreeNode *child_head){
+        node = malloc(sizeof(TreeNode));
+        node->child_head = child_head;
+}
+
+void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number){
+        sprintf(newNode->type,"%s",type);
+        sprintf(newNode->text,"%s",text);
+        sprintf(newNode->grammar_type,"%s",grammar_type);
+        newNode->grammar_number = grammar_number;
+        newNode->next = NULL;
+}
 
 /* 以下為建立symbol table的data structure */
 
 struct symbol_node {
         char text[TEXT_LENGTH];
         struct symbol_node *next;
-};
+}
 typedef struct symbol_node SymbolNode;
 
 SymbolNode *GetFirstNode(){
@@ -80,10 +106,6 @@ void ShowList(SymbolNode *ptr,char *name){
 	}
 	printf("\n");
 }
-
-
-SymbolNode *Identifiers;
-SymbolNode *Strings;
 
 %}
 
@@ -189,14 +211,29 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   CASE expr OF action_list ESAC       {printf("expr 16 ");}
         |   NEW TYPE_ID         {printf("expr 17 ");}
         |   ISVOID expr         {printf("expr 18 ");}
-        |   NOT expr            {printf("expr 19 ");}
-        |   INT_COMP expr       {printf("expr 20 ");}
+        |   NOT expr            {
+                printf("expr 19 ");
+                TreeNode *childHead = MakeTreeNode("NOT",$1.text,"expr",19);
+                SetTreeNode($2.node,"expr","NonTerminal","expr",19);
+                childHead->next = $2.node;
+                SetFatherNode($$.node, child_head);
+                                }
+        |   INT_COMP expr       {
+                printf("expr 20 ");
+                TreeNode *childHead = MakeTreeNode("INT_COMP",$1.text,"expr",20);
+                SetTreeNode($2.node,"expr","NonTerminal","expr",20);
+                childHead->next = $2.node;
+                SetFatherNode($$.node, child_head);
+                                }
         ;
 
 %%
 
 int main() {
-    Identifiers = GetFirstNode();
-    Strings = GetFirstNode();
-    return yyparse();
+        SymbolNode *Identifiers = GetFirstNode();
+        SymbolNode *Strings = GetFirstNode();
+        SymbolNode *Booleans = GetFirstNode();
+        SymbolNode *Operators = GetFirstNode();
+        SymbolNode *Numbers = GetFirstNode();
+        return yyparse();
 }
