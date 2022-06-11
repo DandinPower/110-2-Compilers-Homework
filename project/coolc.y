@@ -17,31 +17,11 @@ struct tree_node {
 };
 typedef struct tree_node TreeNode;
 
+TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number);
+void SetFatherNode(TreeNode *node, TreeNode *child_head);
+void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number);
+
 TreeNode *root;
-
-TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number){
-        TreeNode *newNode = malloc(sizeof(TreeNode));
-        sprintf(newNode->type,"%s",type);
-        sprintf(newNode->text,"%s",text);
-        sprintf(newNode->grammar_type,"%s",grammar_type);
-        newNode->grammar_number = grammar_number;
-        newNode->child_head = NULL;
-        newNode->next = NULL;
-        return newNode;
-}
-
-void SetFatherNode(TreeNode *node, TreeNode *child_head){
-        node = malloc(sizeof(TreeNode));
-        node->child_head = child_head;
-}
-
-void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number){
-        sprintf(node->type,"%s",type);
-        sprintf(node->text,"%s",text);
-        sprintf(node->grammar_type,"%s",grammar_type);
-        node->grammar_number = grammar_number;
-        node->next = NULL;
-}
 
 /* 以下為建立symbol table的data structure */
 
@@ -51,61 +31,11 @@ struct symbol_node {
 };
 typedef struct symbol_node SymbolNode;
 
-SymbolNode *GetFirstNode(){
-	SymbolNode *newNode = NULL;
-	newNode = malloc(sizeof(SymbolNode));
-	sprintf(newNode->text,"%s",NONE);
-	newNode->next = NULL;
-	return newNode;
-}
-
-SymbolNode *GetNewNode(char *data){
-	SymbolNode *newNode = NULL;
-	newNode = malloc(sizeof(SymbolNode));
-	sprintf(newNode->text,"%s",data);
-	newNode->next = NULL;
-	return newNode;
-}
-
-int CheckData(SymbolNode *List,char *data){
-	SymbolNode *ptr = List;
-	int isSame = -1;
-	int i=0;
-	while(ptr!=NULL){
-	  	if (strcmp(data,ptr->text)==0)isSame = i;
-	  	ptr=ptr->next;
-	  	i++;
-	}
-	return isSame;
-}
-
-void AddData(SymbolNode *List,char *text){
-	SymbolNode *ptr = List;
-	if (CheckData(List,text)!=-1)return;
-	if (strcmp(ptr->text,NONE)==0){
-		sprintf(ptr->text,"%s",text);
-		ptr->next = NULL;
-	}
-	else{	
-		while(ptr->next!=NULL){
-	  		ptr=ptr->next;
-	  	}
-	  	SymbolNode *newNode = GetNewNode(text);
-	  	ptr->next = newNode;
-	}
-}
-
-void ShowList(SymbolNode *ptr,char *name){
-	printf("%s: ",name);
-	int i=0;
-	while(ptr!=NULL && strcmp(ptr->text,NONE)){
-		printf("[%d]: %s",i,ptr->text); //印出節點的資料 
-		if (ptr->next!=NULL)printf(",");
-		ptr=ptr->next;  //將ptr指向下一個節點 
-		i++;
-	}
-	printf("\n");
-}
+SymbolNode *GetFirstNode();
+SymbolNode *GetNewNode(char *data);
+int CheckData(SymbolNode *List,char *data);
+void AddData(SymbolNode *List,char *text);
+void ShowList(SymbolNode *ptr,char *name);
 
 SymbolNode *Identifiers;
 SymbolNode *Strings;
@@ -244,3 +174,84 @@ int main() {
         Numbers = GetFirstNode();
         return yyparse();
 }
+
+TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number){
+        TreeNode *newNode = malloc(sizeof(TreeNode));
+        sprintf(newNode->type,"%s",type);
+        sprintf(newNode->text,"%s",text);
+        sprintf(newNode->grammar_type,"%s",grammar_type);
+        newNode->grammar_number = grammar_number;
+        newNode->child_head = NULL;
+        newNode->next = NULL;
+        return newNode;
+}
+
+void SetFatherNode(TreeNode *node, TreeNode *child_head){
+        node = malloc(sizeof(TreeNode));
+        node->child_head = child_head;
+}
+
+void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number){
+        sprintf(node->type,"%s",type);
+        sprintf(node->text,"%s",text);
+        sprintf(node->grammar_type,"%s",grammar_type);
+        node->grammar_number = grammar_number;
+        node->next = NULL;
+}
+
+SymbolNode *GetFirstNode(){
+	SymbolNode *newNode = NULL;
+	newNode = malloc(sizeof(SymbolNode));
+	sprintf(newNode->text,"%s",NONE);
+	newNode->next = NULL;
+	return newNode;
+}
+
+SymbolNode *GetNewNode(char *data){
+	SymbolNode *newNode = NULL;
+	newNode = malloc(sizeof(SymbolNode));
+	sprintf(newNode->text,"%s",data);
+	newNode->next = NULL;
+	return newNode;
+}
+
+int CheckData(SymbolNode *List,char *data){
+	SymbolNode *ptr = List;
+	int isSame = -1;
+	int i=0;
+	while(ptr!=NULL){
+	  	if (strcmp(data,ptr->text)==0)isSame = i;
+	  	ptr=ptr->next;
+	  	i++;
+	}
+	return isSame;
+}
+
+void AddData(SymbolNode *List,char *text){
+	SymbolNode *ptr = List;
+	if (CheckData(List,text)!=-1)return;
+	if (strcmp(ptr->text,NONE)==0){
+		sprintf(ptr->text,"%s",text);
+		ptr->next = NULL;
+	}
+	else{	
+		while(ptr->next!=NULL){
+	  		ptr=ptr->next;
+	  	}
+	  	SymbolNode *newNode = GetNewNode(text);
+	  	ptr->next = newNode;
+	}
+}
+
+void ShowList(SymbolNode *ptr,char *name){
+	printf("%s: ",name);
+	int i=0;
+	while(ptr!=NULL && strcmp(ptr->text,NONE)){
+		printf("[%d]: %s",i,ptr->text); //印出節點的資料 
+		if (ptr->next!=NULL)printf(",");
+		ptr=ptr->next;  //將ptr指向下一個節點 
+		i++;
+	}
+	printf("\n");
+}
+
