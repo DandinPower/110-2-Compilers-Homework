@@ -48,7 +48,7 @@ void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int 
 struct symbol_node {
         char text[TEXT_LENGTH];
         struct symbol_node *next;
-}
+};
 typedef struct symbol_node SymbolNode;
 
 SymbolNode *GetFirstNode(){
