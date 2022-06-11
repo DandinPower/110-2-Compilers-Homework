@@ -62,7 +62,12 @@ SymbolNode *Numbers;
 %left AT DOT OPERATOR
 %%
 
-program :   clist       {printf("\nDone!\n");}
+program :   clist       {
+                printf("\nDone!\n");
+                ShowList(Strings,"LETTER");
+                SetTreeNode($1.node,"clist","NonTerminal","program",1);
+                root = $1.node;
+                }
         ;
 
 clist   :   clist class SYNTAX_OVER     {printf("clist 1 ");}
