@@ -36,11 +36,11 @@ void SetFatherNode(TreeNode *node, TreeNode *child_head){
 }
 
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number){
-        sprintf(newNode->type,"%s",type);
-        sprintf(newNode->text,"%s",text);
-        sprintf(newNode->grammar_type,"%s",grammar_type);
-        newNode->grammar_number = grammar_number;
-        newNode->next = NULL;
+        sprintf(node->type,"%s",type);
+        sprintf(node->text,"%s",text);
+        sprintf(node->grammar_type,"%s",grammar_type);
+        node->grammar_number = grammar_number;
+        node->next = NULL;
 }
 
 /* 以下為建立symbol table的data structure */
@@ -106,6 +106,12 @@ void ShowList(SymbolNode *ptr,char *name){
 	}
 	printf("\n");
 }
+
+SymbolNode *Identifiers;
+SymbolNode *Strings;
+SymbolNode *Booleans;
+SymbolNode *Operators;
+SymbolNode *Numbers;
 
 %}
 
@@ -231,10 +237,10 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
 %%
 
 int main() {
-        SymbolNode *Identifiers = GetFirstNode();
-        SymbolNode *Strings = GetFirstNode();
-        SymbolNode *Booleans = GetFirstNode();
-        SymbolNode *Operators = GetFirstNode();
-        SymbolNode *Numbers = GetFirstNode();
+        Identifiers = GetFirstNode();
+        Strings = GetFirstNode();
+        Booleans = GetFirstNode();
+        Operators = GetFirstNode();
+        Numbers = GetFirstNode();
         return yyparse();
 }
