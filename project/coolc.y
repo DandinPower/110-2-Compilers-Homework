@@ -186,6 +186,7 @@ void SetFatherNode(TreeNode *node, TreeNode *child_head){
 }
 
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number){
+        node = malloc(sizeof(TreeNode));
         sprintf(node->type,"%s",type);
         sprintf(node->text,"%s",text);
         sprintf(node->grammar_type,"%s",grammar_type);
