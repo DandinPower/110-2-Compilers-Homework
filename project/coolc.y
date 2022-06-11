@@ -20,6 +20,7 @@ typedef struct tree_node TreeNode;
 TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number);
 void SetFatherNode(TreeNode *node, TreeNode *child_head);
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number);
+void TraverseTree(TreeNode *node);
 
 TreeNode *root;
 
@@ -61,22 +62,87 @@ SymbolNode *Numbers;
 %left AT DOT OPERATOR
 %%
 
-program :   clist       {printf("\nDone!\n");ShowList(Strings,"LETTER");}
+program :   clist       {
+                printf("\nDone!\n");
+                ShowList(Strings,"LETTER");
+                SetTreeNode($1.node,"clist","NonTerminal","program",1);
+                root = $1.node;
+                }
         ;
 
-clist   :   clist class SYNTAX_OVER     {printf("clist 1 ");}
-        |   class SYNTAX_OVER           {printf("clist 2 ");}
+clist   :   clist class SYNTAX_OVER     {
+                printf("clist 1 ");
+                SetTreeNode($1.node,"clist","NonTerminal","clist",1);
+                SetTreeNode($2.node,"class","NonTerminal","clist",1);
+                TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$3.text,"clist",1);
+                $1.node->next = $2.node;
+                $2.node->next = tempChild;
+                SetFatherNode($$.node, $1.node);
+                }
+        |   class SYNTAX_OVER           {
+                printf("clist 2 ");
+                SetTreeNode($1.node,"class","NonTerminal","clist",2);
+                TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$2.text,"clist",2);
+                $1.node->next = tempChild;
+                SetFatherNode($$.node, $1.node);
+                }
         ;
 
-class   :   CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {printf("class 1 ");}
-        |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {printf("class 2 ");}
+class   :   CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {
+                printf("class 1 ");
+                TreeNode *tempChild = MakeTreeNode("CLASS",$1.text,"class",1);
+                TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$2.text,"class",1);
+                TreeNode *tempChild3 = MakeTreeNode("BLOCKSTART",$3.text,"class",1);
+                SetTreeNode($4.node,"flist_opt","NonTerminal","class",1);
+                TreeNode *tempChild4 = MakeTreeNode("BLOCKOVER",$5.text,"class",1);
+                tempChild->next = tempChild2;
+                tempChild2->next = tempChild3;
+                tempChild3->next = $4.node;
+                $4.node->next = tempChild4;
+                SetFatherNode($$.node, tempChild);
+                }
+        |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {
+                printf("class 2 ");
+                TreeNode *tempChild = MakeTreeNode("CLASS",$1.text,"class",2);
+                TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$2.text,"class",2);
+                TreeNode *tempChild3 = MakeTreeNode("INHERITS",$3.text,"class",2);
+                TreeNode *tempChild4 = MakeTreeNode("TYPE_ID",$4.text,"class",2);
+                TreeNode *tempChild5 = MakeTreeNode("BLOCKSTART",$5.text,"class",2);
+                SetTreeNode($6.node,"flist_opt","NonTerminal","class",2);
+                TreeNode *tempChild6 = MakeTreeNode("BLOCKOVER",$7.text,"class",2);
+                tempChild->next = tempChild2;
+                tempChild2->next = tempChild3;
+                tempChild3->next = tempChild4;
+                tempChild4->next = tempChild5;
+                tempChild5->next = $6.node;
+                $6.node->next = tempChild6;
+                SetFatherNode($$.node, tempChild);
+                }
         ;
 
-flist_opt       :   flist       {printf("flist_opt 1 ");}
+flist_opt       :   flist       {
+                printf("flist_opt 1 ");
+                SetTreeNode($1.node,"flist","NonTerminal","flist_opt",1);
+                SetFatherNode($$.node, $1.node);
+                }
                 |   /*empty*/
 
-flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
-        |   feature SYNTAX_OVER     {printf("flist 2 ");}
+flist   :   flist feature SYNTAX_OVER   {
+                printf("flist 1 ");
+                SetTreeNode($1.node,"flist","NonTerminal","flist",1);
+                SetTreeNode($2.node,"feature","NonTerminal","flist",1);
+                TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$3.text,"flist",1);
+                $1.node->next = $2.node;
+                $2.node->next = tempChild;
+                SetFatherNode($$.node, $1.node);
+                }
+        |   feature SYNTAX_OVER     {
+                printf("flist 2 ");
+                SetTreeNode($1.node,"feature","NonTerminal","flist",2);
+                TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$2.text,"flist",2);
+                $1.node->next = tempChild;
+                SetFatherNode($$.node, $1.node);
+                }
         ; 
 
 feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 1 ");}
@@ -144,10 +210,40 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
         |   IF expr THEN expr ELSE expr FI      {printf("expr 13 ");} 
         |   WHILE expr LOOP expr POOL   {printf("expr 14 ");}
 //        |   let_expr
-        |   LET let_action      {printf("expr 15 ");}
-        |   CASE expr OF action_list ESAC       {printf("expr 16 ");}
-        |   NEW TYPE_ID         {printf("expr 17 ");}
-        |   ISVOID expr         {printf("expr 18 ");}
+        |   LET let_action      {
+                printf("expr 15 ");
+                TreeNode *childHead = MakeTreeNode("LET",$1.text,"expr",15);
+                SetTreeNode($2.node,"let_action","NonTerminal","expr",15);
+                childHead->next = $2.node;
+                SetFatherNode($$.node, childHead);
+                }
+        |   CASE expr OF action_list ESAC       {
+                printf("expr 16 ");
+                TreeNode *childHead = MakeTreeNode("CASE",$1.text,"expr",16);
+                SetTreeNode($2.node,"expr","NonTerminal","expr",16);
+                childHead->next = $2.node;
+                TreeNode *tempChild = MakeTreeNode("OF",$3.text,"expr",16);
+                $2.node->next = tempChild;
+                SetTreeNode($4.node,"action_list","NonTerminal","expr",16);
+                tempChild->next = $4.node;
+                TreeNode *tempChild2 = MakeTreeNode("ESAC",$5.text,"expr",16);
+                $4.node->next = tempChild2;
+                SetFatherNode($$.node, childHead);
+                        }
+        |   NEW TYPE_ID         {
+                printf("expr 17 ");
+                TreeNode *childHead = MakeTreeNode("NEW",$1.text,"expr",17);
+                TreeNode *tempChild = MakeTreeNode("TYPE_ID",$2.text,"expr",17);
+                childHead->next = tempChild;
+                SetFatherNode($$.node, childHead);
+                }
+        |   ISVOID expr         {
+                printf("expr 18 ");
+                TreeNode *childHead = MakeTreeNode("ISVOID",$1.text,"expr",18);
+                SetTreeNode($2.node,"expr","NonTerminal","expr",18);
+                childHead->next = $2.node;
+                SetFatherNode($$.node, childHead);
+                }
         |   NOT expr            {
                 printf("expr 19 ");
                 TreeNode *childHead = MakeTreeNode("NOT",$1.text,"expr",19);
@@ -197,6 +293,12 @@ void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int 
         sprintf(node->grammar_type,"%s",grammar_type);
         node->grammar_number = grammar_number;
         node->next = NULL;
+}
+
+void TraverseTree(TreeNode *node){
+        printf("%s, ", node->text);
+        if(node->child_head != NULL) TraverseTree(node->childHead);
+        if(node->next != NULL) TraverseTree(node->next);
 }
 
 SymbolNode *GetFirstNode(){
