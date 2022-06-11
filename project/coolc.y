@@ -223,7 +223,7 @@ expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
                 TreeNode *childHead = MakeTreeNode("NOT",$1.text,"expr",19);
                 SetTreeNode($2.node,"expr","NonTerminal","expr",19);
                 childHead->next = $2.node;
-                SetFatherNode($$.node, child_head);
+                SetFatherNode($$.node, childHead);
                                 }
         |   INT_COMP expr       {
                 printf("expr 20 ");
