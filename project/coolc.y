@@ -330,7 +330,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                         tempChild3->next = tempChild4;
                         tempChild4->next = tempChild5;
                         tempChild5->next = $6.node;
-                        $6.node->tempChild6;
+                        $6.node->next = tempChild6;
                         SetFatherNode($$.node,tempChild);      
                         }
                 |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN BLOCKSTART block_list BLOCKOVER         {
@@ -342,7 +342,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                         SetTreeNode($5.node,"expr","NonTerminal","let_action",2);
                         TreeNode *tempChild5 = MakeTreeNode("IN",$6.text,"let_action",2);
                         TreeNode *tempChild6 = MakeTreeNode("BLOCKSTART",$7.text,"let_action",2);
-                        SetTreeNode($8.node,"block_list","NonTerminal","let_action",2)
+                        SetTreeNode($8.node,"block_list","NonTerminal","let_action",2);
                         TreeNode *tempChild7 = MakeTreeNode("BLOCKOVER",$9.text,"let_action",2);
                         tempChild->next = tempChild2;
                         tempChild2->next = tempChild3;
