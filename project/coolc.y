@@ -253,7 +253,7 @@ block_list      :   block_list expr SYNTAX_OVER         {
                         printf("block_list 2 ");
                         SetTreeNode($1.node,"expr","NonTerminal","block_list",2);
                         TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$2.text,"block_list",2);
-                        $1.node->tempChild;
+                        $1.node->next = tempChild;
                         SetFatherNode($$.node, $1.node);
                         }
                 ;
@@ -261,7 +261,7 @@ block_list      :   block_list expr SYNTAX_OVER         {
 arguments_list  :   arguments   {
                         printf("arguments_list 1 ");
                         SetTreeNode($1.node,"arguments","NonTerminal","arguments_list",1);
-                        SetFatherEmpty($$.node,$1.node);
+                        SetFatherNode($$.node,$1.node);
                         }
                 |   /*empty*/   {
                         printf("arguments_list 2 ");
@@ -323,7 +323,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                         TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"let_action",1);
                         TreeNode *tempChild4 = MakeTreeNode("IN",$4.text,"let_action",1);
                         TreeNode *tempChild5 = MakeTreeNode("BLOCKSTART",$5.text,"let_action",1);
-                        SetTreeNode($6.node,"block_list","NonTerminal","let_action",1)
+                        SetTreeNode($6.node,"block_list","NonTerminal","let_action",1);
                         TreeNode *tempChild6 = MakeTreeNode("BLOCKOVER",$7.text,"let_action",1);
                         tempChild->next = tempChild2;
                         tempChild2->next = tempChild3;
@@ -339,7 +339,7 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                         TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"let_action",2);
                         TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"let_action",2);
                         TreeNode *tempChild4 = MakeTreeNode("ASSIGN",$4.text,"let_action",2);
-                        SetTreeNode($5.node,"expr","NonTerminal","let_action",2)
+                        SetTreeNode($5.node,"expr","NonTerminal","let_action",2);
                         TreeNode *tempChild5 = MakeTreeNode("IN",$6.text,"let_action",2);
                         TreeNode *tempChild6 = MakeTreeNode("BLOCKSTART",$7.text,"let_action",2);
                         SetTreeNode($8.node,"block_list","NonTerminal","let_action",2)
@@ -411,7 +411,7 @@ expr    :   IDENTIFIER_ID       {
                 tempChild->next = tempChild2;
                 tempChild2->next = tempChild3;
                 tempChild3->next = $5.node;
-                $5.node->tempChild4;
+                $5.node->next = tempChild4;
                 SetFatherNode($$.node,$1.node);
                 }
         |   expr AT TYPE_ID DOT IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER         {
