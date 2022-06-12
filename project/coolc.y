@@ -197,7 +197,7 @@ TreeNode* SetFatherNode(TreeNode *child_head){
         return node;
 }
 
-TreeNode* SetFatherEmpty(TreeNode *node){
+TreeNode* SetFatherEmpty(){
         TreeNode *node = (TreeNode *)malloc(sizeof(TreeNode));
         node->child_head = NULL;
         return node;
