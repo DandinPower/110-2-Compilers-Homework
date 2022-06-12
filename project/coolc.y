@@ -99,7 +99,7 @@ feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTA
                 tempChild->next = tempChild2;
                 tempChild2->next = tempChild3;
                 SetFatherNode($$.node, tempChild);
-                $$.node->text = "test";
+                sprintf($$.node->text,"%s","test");
                 }
         ;
 
