@@ -81,59 +81,9 @@ flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
         |   feature SYNTAX_OVER     {printf("flist 2 ");}
         ; 
 
-feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {
-                printf("feature 1 ");
-                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"feature",1);
-                TreeNode *tempChild2 = MakeTreeNode("ITEMSTART",$2.text,"feature",1);
-                SetTreeNode($3.node,"formal_list","NonTerminal","feature",1);
-                TreeNode *tempChild3 = MakeTreeNode("ITEMOVER",$4.text,"feature",1);
-                TreeNode *tempChild4 = MakeTreeNode("DEFINE",$5.text,"feature",1);
-                TreeNode *tempChild5 = MakeTreeNode("TYPE_ID",$6.text,"feature",1);
-                TreeNode *tempChild6 = MakeTreeNode("BLOCKSTART",$7.text,"feature",1);
-                SetTreeNode($8.node,"expr","NonTerminal","feature",1);
-                TreeNode *tempChild7 = MakeTreeNode("BLOCKOVER",$9.text,"feature",1);
-                tempChild->next = tempChild2;
-                tempChild2->next = $3.node;
-                $3.node->next = tempChild3;
-                tempChild3->next = tempChild4;
-                tempChild4->next = tempChild5;
-                tempChild5->next = tempChild6;
-                tempChild6->next = $8.node;
-                $8.node->next = tempChild7;
-                SetFatherNode($$.node, tempChild);
-                }
-        |   IDENTIFIER_ID ITEMSTART ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {
-                printf("feature 2 ");
-                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"feature",2);
-                TreeNode *tempChild2 = MakeTreeNode("ITEMSTART",$2.text,"feature",2);
-                TreeNode *tempChild3 = MakeTreeNode("ITEMOVER",$3.text,"feature",2);
-                TreeNode *tempChild4 = MakeTreeNode("DEFINE",$4.text,"feature",2);
-                TreeNode *tempChild5 = MakeTreeNode("TYPE_ID",$5.text,"feature",2);
-                TreeNode *tempChild6 = MakeTreeNode("BLOCKSTART",$6.text,"feature",2);
-                SetTreeNode($7.node,"expr","NonTerminal","feature",2);
-                TreeNode *tempChild7 = MakeTreeNode("BLOCKOVER",$8.text,"feature",2);
-                tempChild->next = tempChild2;
-                tempChild2->next = tempChild3;
-                tempChild3->next = tempChild4;
-                tempChild4->next = tempChild5;
-                tempChild5->next = tempChild6;
-                tempChild6->next = $7.node;
-                $7.node->next = tempChild7;
-                SetFatherNode($$.node, tempChild);
-                }
-        |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr    {
-                printf("feature 3 ");
-                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"feature",3);
-                TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"feature",3);
-                TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"feature",3);
-                TreeNode *tempChild4 = MakeTreeNode("ASSIGN",$4.text,"feature",3);
-                SetTreeNode($5.node,"expr","NonTerminal","feature",3);
-                tempChild->next = tempChild2;
-                tempChild2->next = tempChild3;
-                tempChild3->next = tempChild4;
-                tempChild4->next = $5.node;
-                SetFatherNode($$.node, tempChild);
-                }
+feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 1 ");}
+        |   IDENTIFIER_ID ITEMSTART ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 2 ");}
+        |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr    {printf("feature 3 ");}
         |   IDENTIFIER_ID DEFINE TYPE_ID        {
                 printf("feature 4 ");
                 TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"feature",4);
