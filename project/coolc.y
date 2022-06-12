@@ -193,7 +193,7 @@ TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_n
 }
 
 TreeNode* SetFatherNode(TreeNode *child_head){
-        node = (TreeNode *)malloc(sizeof(TreeNode));
+        TreeNode *node = (TreeNode *)malloc(sizeof(TreeNode));
         node->child_head = child_head;
         return node;
 }
