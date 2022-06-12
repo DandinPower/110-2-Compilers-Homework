@@ -19,7 +19,7 @@ typedef struct tree_node TreeNode;
 
 TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number);
 TreeNode *SetFatherNode(TreeNode *child_head);
-void SetFatherEmpty(TreeNode *node);
+TreeNode *SetFatherEmpty();
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number);
 void TraverseTree(TreeNode *node);
 
@@ -80,11 +80,10 @@ flist_opt       :   flist       {printf("flist_opt 1 ");}
 flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
         |   feature SYNTAX_OVER     {
                 printf("flist 2 ");
-                printf("%s \n",$1.node->text);
-                //SetTreeNode($1.node,"feature","NonTerminal","flist",2);
-                //TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$2.text,"flist",2);
-                //$1.node->next = tempChild;
-                //SetFatherNode($$.node, $1.node);
+                SetTreeNode($1.node,"feature","NonTerminal","flist",2);
+                TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$2.text,"flist",2);
+                $1.node->next = tempChild;
+                $$.node = SetFatherNode($1.node);
                 }
         ; 
 
@@ -198,9 +197,10 @@ TreeNode* SetFatherNode(TreeNode *child_head){
         return node;
 }
 
-void SetFatherEmpty(TreeNode *node){
-        node = (TreeNode *)malloc(sizeof(TreeNode));
+TreeNode* SetFatherEmpty(TreeNode *node){
+        TreeNode *node = (TreeNode *)malloc(sizeof(TreeNode));
         node->child_head = NULL;
+        return node;
 }
 
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number){
