@@ -181,7 +181,7 @@ int main() {
 }
 
 TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number){
-        TreeNode *newNode = malloc(sizeof(TreeNode));
+        TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
         sprintf(newNode->type,"%s",type);
         sprintf(newNode->text,"%s",text);
         sprintf(newNode->grammar_type,"%s",grammar_type);
@@ -192,12 +192,12 @@ TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_n
 }
 
 void SetFatherNode(TreeNode *node, TreeNode *child_head){
-        node = malloc(sizeof(TreeNode));
+        node = (TreeNode *)malloc(sizeof(TreeNode));
         node->child_head = child_head;
 }
 
 void SetFatherEmpty(TreeNode *node){
-        node = malloc(sizeof(TreeNode));
+        node = (TreeNode *)malloc(sizeof(TreeNode));
         node->child_head = NULL;
 }
 
