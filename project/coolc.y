@@ -36,7 +36,7 @@ typedef struct symbol_node SymbolNode;
 SymbolNode *GetFirstNode();
 SymbolNode *GetNewNode(char *data);
 int CheckData(SymbolNode *List,char *data);
-void AddData(SymbolNode *List,char *text);
+int AddData(SymbolNode *List,char *text);
 void ShowList(SymbolNode *ptr,char *name);
 
 SymbolNode *Identifiers;
@@ -359,7 +359,10 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
 
 expr    :   IDENTIFIER_ID       {
                 printf("expr 1 ");
-                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"expr",1);
+                int index = AddData(Identifiers,$1.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","ID",index);
+                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",newText,"expr",1);
                 $$.node = SetFatherNode(tempChild);
                 }
         |   DIGIT               {
@@ -622,9 +625,10 @@ int CheckData(SymbolNode *List,char *data){
 	return isSame;
 }
 
-void AddData(SymbolNode *List,char *text){
+int AddData(SymbolNode *List,char *text){
 	SymbolNode *ptr = List;
-	if (CheckData(List,text)!=-1)return;
+        int index = CheckData(List,text);
+	if (index!=-1)return index;
 	if (strcmp(ptr->text,NONE)==0){
 		sprintf(ptr->text,"%s",text);
 		ptr->next = NULL;
@@ -636,6 +640,7 @@ void AddData(SymbolNode *List,char *text){
 	  	SymbolNode *newNode = GetNewNode(text);
 	  	ptr->next = newNode;
 	}
+        return CheckData(List,text);
 }
 
 void ShowList(SymbolNode *ptr,char *name){
