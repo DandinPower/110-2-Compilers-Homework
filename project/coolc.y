@@ -98,7 +98,7 @@ feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTA
                 TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"feature",4);
                 tempChild->next = tempChild2;
                 tempChild2->next = tempChild3;
-                SetFatherNode($$.node, tempChild);
+                $$.node = SetFatherNode(tempChild);
                 sprintf($$.node->text,"%s","test");
                 }
         ;
@@ -192,9 +192,10 @@ TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_n
         return newNode;
 }
 
-void SetFatherNode(TreeNode *node, TreeNode *child_head){
+TreeNode* SetFatherNode(TreeNode *child_head){
         node = (TreeNode *)malloc(sizeof(TreeNode));
         node->child_head = child_head;
+        return node;
 }
 
 void SetFatherEmpty(TreeNode *node){
