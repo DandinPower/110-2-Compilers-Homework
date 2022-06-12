@@ -78,7 +78,13 @@ flist_opt       :   flist       {printf("flist_opt 1 ");}
                 |   /*empty*/
 
 flist   :   flist feature SYNTAX_OVER   {printf("flist 1 ");}
-        |   feature SYNTAX_OVER     {printf("flist 2 ");}
+        |   feature SYNTAX_OVER     {
+                printf("flist 2 ");
+                SetTreeNode($1.node,"feature","NonTerminal","flist",2);
+                TreeNode *tempChild = MakeTreeNode("SYNTAX_OVER",$2.text,"flist",2);
+                $1.node->next = tempChild;
+                SetFatherNode($$.node, $1.node);
+                }
         ; 
 
 feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER  {printf("feature 1 ");}
