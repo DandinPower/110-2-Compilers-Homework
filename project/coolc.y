@@ -18,7 +18,7 @@ struct tree_node {
 typedef struct tree_node TreeNode;
 
 TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_number);
-void SetFatherNode(TreeNode *node, TreeNode *child_head);
+TreeNode *SetFatherNode(TreeNode *child_head);
 void SetFatherEmpty(TreeNode *node);
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number);
 void TraverseTree(TreeNode *node);
