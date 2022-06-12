@@ -146,10 +146,18 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                 |   IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN BLOCKSTART block_list BLOCKOVER         {printf("let_action 2 ");}
                 ;
 
-expr    :   IDENTIFIER_ID       {printf("expr 1 ");}
+expr    :   IDENTIFIER_ID       {
+                printf("expr 1 ");
+                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"expr",1);
+                $$.node = SetFatherNode(tempChild);
+                }
         |   DIGIT               {printf("expr 2 ");}
         |   BOOLEAN             {printf("expr 3 ");}
-        |   LETTER              {printf("expr 4 ");}
+        |   LETTER              {
+                printf("expr 4 ");
+                TreeNode *tempChild = MakeTreeNode("LETTER",$1.text,"expr",4);
+                $$.node = SetFatherNode(tempChild);
+                }
         |   SELF                {printf("expr 5 ");}
         |   BLOCKSTART block_list BLOCKOVER     {printf("expr 6 ");}
         |   IDENTIFIER_ID ASSIGN expr           {printf("expr 7 ");}
