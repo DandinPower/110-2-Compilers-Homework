@@ -570,6 +570,7 @@ expr    :   IDENTIFIER_ID       {
 %%
 
 int main() {
+        printf("Parsing...\n\n");
         Identifiers = GetFirstNode();
         Strings = GetFirstNode();
         Booleans = GetFirstNode();
