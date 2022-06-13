@@ -64,12 +64,14 @@ SymbolNode *Numbers;
 %%
 
 program :   clist       {
-                printf("\nDone!\n");
+                printf("\nDone!\n\n");
+                printf("Symbol Table: \n\n");
                 ShowList(Identifiers,"ID");
                 ShowList(Strings,"STRING");
                 ShowList(Booleans,"BOOLEAN");
                 ShowList(Operators,"OPERATOR");
                 ShowList(Numbers,"NUMBER");
+                printf("\n\nSyntax Tree: \n\n");
                 SetTreeNode($1.node,"clist","NonTerminal","program",1);
                 root = $1.node;
                 TraverseTree(root);
