@@ -133,7 +133,9 @@ flist_opt       :   flist       {
                 }
                 |   /*empty*/   {
                         printf("flist_opt 2 ");
-                        $$.node = SetFatherEmpty();
+                        TreeNode *tempChild = MakeTreeNode("EMPTY","empty","flist_opt",2);
+                        //$$.node = SetFatherEmpty();
+                        SetFatherNode(tempChild);
                 }
 
 flist   :   flist feature SYNTAX_OVER   {
@@ -270,7 +272,9 @@ arguments_list  :   arguments   {
                         }
                 |   /*empty*/   {
                         printf("arguments_list 2 ");
-                        $$.node = SetFatherEmpty();
+                        TreeNode *tempChild = MakeTreeNode("EMPTY","empty","arguments_list",2);
+                        //$$.node = SetFatherEmpty();
+                        SetFatherNode(tempChild);
                         }
                 ;
 
