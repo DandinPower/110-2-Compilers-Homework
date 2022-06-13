@@ -607,7 +607,7 @@ void TraverseTree(TreeNode *node){
         printf("%s ", node->type);
         if(node->next != NULL) TraverseTree(node->next);
         else {
-                printf("reduce(%s%d) ",node->grammar_type,node->grammar_number);
+                printf("reduce(%s) ",node->grammar_type);
                 printf("\n");
         }
         if(node->child_head != NULL) {
