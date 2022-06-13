@@ -463,7 +463,10 @@ expr    :   IDENTIFIER_ID       {
         |   expr OPERATOR expr          {
                 printf("expr 11 ");
                 SetTreeNode($1.node,"expr","NonTerminal","expr",11);
-                TreeNode *tempChild = MakeTreeNode("OPERATOR",$2.text,"expr",11);
+                int index = AddData(Operators,$2.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","OPERATOR",index);
+                TreeNode *tempChild = MakeTreeNode(newText,$2.text,"expr",11);
                 SetTreeNode($3.node,"expr","NonTerminal","expr",11);
                 $1.node->next = tempChild;
                 tempChild->next = $3.node;
