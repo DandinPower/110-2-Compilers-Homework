@@ -65,7 +65,11 @@ SymbolNode *Numbers;
 
 program :   clist       {
                 printf("\nDone!\n");
-                ShowList(Strings,"LETTER");
+                ShowList(Identifiers,"ID");
+                ShowList(Strings,"STRING");
+                ShowList(Booleans,"BOOLEAN");
+                ShowList(Operators,"OPERATOR");
+                ShowList(Numbers,"NUMBER");
                 SetTreeNode($1.node,"clist","NonTerminal","program",1);
                 root = $1.node;
                 TraverseTree(root);
@@ -362,22 +366,31 @@ expr    :   IDENTIFIER_ID       {
                 int index = AddData(Identifiers,$1.text);
                 char newText[TEXT_LENGTH];
                 sprintf(newText,"%s[%d]","ID",index);
-                TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",newText,"expr",1);
+                TreeNode *tempChild = MakeTreeNode(newText,$1.text,"expr",1);
                 $$.node = SetFatherNode(tempChild);
                 }
         |   DIGIT               {
                 printf("expr 2 ");
-                TreeNode *tempChild = MakeTreeNode("DIGIT",$1.text,"expr",2);
+                int index = AddData(Numbers,$1.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","DIGIT",index);
+                TreeNode *tempChild = MakeTreeNode(newText,$1.text,"expr",2);
                 $$.node = SetFatherNode(tempChild);
                 }
         |   BOOLEAN             {
                 printf("expr 3 ");
-                TreeNode *tempChild = MakeTreeNode("BOOLEAN",$1.text,"expr",3);
+                int index = AddData(Booleans,$1.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","BOOLEAN",index);
+                TreeNode *tempChild = MakeTreeNode(newText,$1.text,"expr",3);
                 $$.node = SetFatherNode(tempChild);
                 }
         |   LETTER              {
                 printf("expr 4 ");
-                TreeNode *tempChild = MakeTreeNode("LETTER",$1.text,"expr",4);
+                int index = AddData(Strings,$1.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","STRING",index);
+                TreeNode *tempChild = MakeTreeNode(newText,$1.text,"expr",4);
                 $$.node = SetFatherNode(tempChild);
                 }
         |   SELF                {
