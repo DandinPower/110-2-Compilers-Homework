@@ -40,6 +40,7 @@ int AddData(SymbolNode *List,char *text);
 void ShowList(SymbolNode *ptr,char *name);
 
 SymbolNode *Identifiers;
+SymbolNode *Types;
 SymbolNode *Strings;
 SymbolNode *Booleans;
 SymbolNode *Operators;
@@ -67,6 +68,7 @@ program :   clist       {
                 printf("\nDone!\n\n");
                 printf("Symbol Table: \n\n");
                 ShowList(Identifiers,"ID");
+                ShowList(Types,"TYPE");
                 ShowList(Strings,"STRING");
                 ShowList(Booleans,"BOOLEAN");
                 ShowList(Operators,"OPERATOR");
@@ -99,7 +101,11 @@ clist   :   clist class SYNTAX_OVER     {
 class   :   CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {
                 printf("class 1 ");
                 TreeNode *tempChild = MakeTreeNode("CLASS",$1.text,"class",1);
-                TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$2.text,"class",1);
+                int index = AddData(Types,$2.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild2 = MakeTreeNode(newText,$2.text,"class",1);
+                //TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$2.text,"class",1);
                 TreeNode *tempChild3 = MakeTreeNode("BLOCKSTART",$3.text,"class",1);
                 SetTreeNode($4.node,"flist_opt","NonTerminal","class",1);
                 TreeNode *tempChild4 = MakeTreeNode("BLOCKOVER",$5.text,"class",1);
@@ -112,7 +118,11 @@ class   :   CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {
         |   CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART flist_opt BLOCKOVER        {
                 printf("class 2 ");
                 TreeNode *tempChild = MakeTreeNode("CLASS",$1.text,"class",2);
-                TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$2.text,"class",2);
+                int index = AddData(Types,$2.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild2 = MakeTreeNode(newText,$2.text,"class",1);
+                //TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$2.text,"class",2);
                 TreeNode *tempChild3 = MakeTreeNode("INHERITS",$3.text,"class",2);
                 TreeNode *tempChild4 = MakeTreeNode("TYPE_ID",$4.text,"class",2);
                 TreeNode *tempChild5 = MakeTreeNode("BLOCKSTART",$5.text,"class",2);
@@ -165,7 +175,11 @@ feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTA
                 SetTreeNode($3.node,"formal_list","NonTerminal","feature",1);
                 TreeNode *tempChild3 = MakeTreeNode("ITEMOVER",$4.text,"feature",1);
                 TreeNode *tempChild4 = MakeTreeNode("DEFINE",$5.text,"feature",1);
-                TreeNode *tempChild5 = MakeTreeNode("TYPE_ID",$6.text,"feature",1);
+                int index = AddData(Types,$6.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild5 = MakeTreeNode(newText,$6.text,"feature",1);
+                //TreeNode *tempChild5 = MakeTreeNode("TYPE_ID",$6.text,"feature",1);
                 TreeNode *tempChild6 = MakeTreeNode("BLOCKSTART",$7.text,"feature",1);
                 SetTreeNode($8.node,"expr","NonTerminal","feature",1);
                 TreeNode *tempChild7 = MakeTreeNode("BLOCKOVER",$9.text,"feature",1);
@@ -185,7 +199,11 @@ feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTA
                 TreeNode *tempChild2 = MakeTreeNode("ITEMSTART",$2.text,"feature",2);
                 TreeNode *tempChild3 = MakeTreeNode("ITEMOVER",$3.text,"feature",2);
                 TreeNode *tempChild4 = MakeTreeNode("DEFINE",$4.text,"feature",2);
-                TreeNode *tempChild5 = MakeTreeNode("TYPE_ID",$5.text,"feature",2);
+                int index = AddData(Types,$5.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild5 = MakeTreeNode(newText,$5.text,"feature",2);
+                //TreeNode *tempChild5 = MakeTreeNode("TYPE_ID",$5.text,"feature",2);
                 TreeNode *tempChild6 = MakeTreeNode("BLOCKSTART",$6.text,"feature",2);
                 SetTreeNode($7.node,"expr","NonTerminal","feature",2);
                 TreeNode *tempChild7 = MakeTreeNode("BLOCKOVER",$8.text,"feature",2);
@@ -202,7 +220,11 @@ feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTA
                 printf("feature 3 ");
                 TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"feature",3);
                 TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"feature",3);
-                TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"feature",3);
+                int index = AddData(Types,$3.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild3 = MakeTreeNode(newText,$3.text,"feature",3);
+                //TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"feature",3);
                 TreeNode *tempChild4 = MakeTreeNode("ASSIGN",$4.text,"feature",3);
                 SetTreeNode($5.node,"expr","NonTerminal","feature",3);
                 tempChild->next = tempChild2;
@@ -215,7 +237,11 @@ feature :   IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTA
                 printf("feature 4 ");
                 TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"feature",4);
                 TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"feature",4);
-                TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"feature",4);
+                int index = AddData(Types,$3.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild3 = MakeTreeNode(newText,$3.text,"feature",4);
+                //TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"feature",4);
                 tempChild->next = tempChild2;
                 tempChild2->next = tempChild3;
                 $$.node = SetFatherNode(tempChild);
@@ -242,7 +268,11 @@ formal  :   IDENTIFIER_ID DEFINE TYPE_ID        {
                 printf("formal 1");
                 TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"formal",1);
                 TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"formal",1);
-                TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"formal",1);
+                int index = AddData(Types,$3.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild3 = MakeTreeNode(newText,$3.text,"formal",1);
+                //TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"formal",1);
                 tempChild->next = tempChild2;
                 tempChild2->next = tempChild3;
                 $$.node = SetFatherNode(tempChild);
@@ -314,7 +344,11 @@ action  :   IDENTIFIER_ID DEFINE TYPE_ID DO expr SYNTAX_OVER    {
                 printf("action 1 ");
                 TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"action",1);
                 TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"action",1);
-                TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"action",1);
+                int index = AddData(Types,$3.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild3 = MakeTreeNode(newText,$3.text,"action",1);
+                //TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"action",1);
                 TreeNode *tempChild4 = MakeTreeNode("DO",$4.text,"action",1);
                 SetTreeNode($5.node,"expr","NonTerminal","action",1);     
                 TreeNode *tempChild5 = MakeTreeNode("SYNTAX_OVER",$6.text,"action",1);
@@ -331,7 +365,11 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                         printf("let_action 1 ");
                         TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"let_action",1);
                         TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"let_action",1);
-                        TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"let_action",1);
+                        int index = AddData(Types,$3.text);
+                        char newText[TEXT_LENGTH];
+                        sprintf(newText,"%s[%d]","TYPE_ID",index);
+                        TreeNode *tempChild3 = MakeTreeNode(newText,$3.text,"let_action",1);
+                        //TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"let_action",1);
                         TreeNode *tempChild4 = MakeTreeNode("IN",$4.text,"let_action",1);
                         TreeNode *tempChild5 = MakeTreeNode("BLOCKSTART",$5.text,"let_action",1);
                         SetTreeNode($6.node,"block_list","NonTerminal","let_action",1);
@@ -348,7 +386,11 @@ let_action      :   IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKO
                         printf("let_action 2 ");
                         TreeNode *tempChild = MakeTreeNode("IDENTIFIER_ID",$1.text,"let_action",2);
                         TreeNode *tempChild2 = MakeTreeNode("DEFINE",$2.text,"let_action",2);
-                        TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"let_action",2);
+                        int index = AddData(Types,$3.text);
+                        char newText[TEXT_LENGTH];
+                        sprintf(newText,"%s[%d]","TYPE_ID",index);
+                        TreeNode *tempChild3 = MakeTreeNode(newText,$3.text,"let_action",2);
+                        //TreeNode *tempChild3 = MakeTreeNode("TYPE_ID",$3.text,"let_action",2);
                         TreeNode *tempChild4 = MakeTreeNode("ASSIGN",$4.text,"let_action",2);
                         SetTreeNode($5.node,"expr","NonTerminal","let_action",2);
                         TreeNode *tempChild5 = MakeTreeNode("IN",$6.text,"let_action",2);
@@ -441,7 +483,11 @@ expr    :   IDENTIFIER_ID       {
                 printf("expr 9 ");
                 SetTreeNode($1.node,"expr","NonTerminal","expr",9);
                 TreeNode *tempChild = MakeTreeNode("AT",$2.text,"expr",9);
-                TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$3.text,"expr",9);
+                int index = AddData(Types,$3.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild2 = MakeTreeNode(newText,$3.text,"expr",9);
+                //TreeNode *tempChild2 = MakeTreeNode("TYPE_ID",$3.text,"expr",9);
                 TreeNode *tempChild3 = MakeTreeNode("DOT",$4.text,"expr",9);
                 TreeNode *tempChild4 = MakeTreeNode("IDENTIFIER_ID",$5.text,"expr",9);
                 TreeNode *tempChild5 = MakeTreeNode("ITEMSTART",$6.text,"expr",9);
@@ -540,7 +586,11 @@ expr    :   IDENTIFIER_ID       {
         |   NEW TYPE_ID         {
                 printf("expr 17 ");
                 TreeNode *childHead = MakeTreeNode("NEW",$1.text,"expr",17);
-                TreeNode *tempChild = MakeTreeNode("TYPE_ID",$2.text,"expr",17);
+                int index = AddData(Types,$2.text);
+                char newText[TEXT_LENGTH];
+                sprintf(newText,"%s[%d]","TYPE_ID",index);
+                TreeNode *tempChild = MakeTreeNode(newText,$2.text,"expr",17);
+                //TreeNode *tempChild = MakeTreeNode("TYPE_ID",$2.text,"expr",17);
                 childHead->next = tempChild;
                 $$.node = SetFatherNode(childHead);
                 }
@@ -576,6 +626,7 @@ int main() {
         Booleans = GetFirstNode();
         Operators = GetFirstNode();
         Numbers = GetFirstNode();
+        Types = GetFirstNode();
         return yyparse();
 }
 
