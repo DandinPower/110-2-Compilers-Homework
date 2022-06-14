@@ -14,11 +14,14 @@ class treeNode:
         self.lines = lines
         self.grammar = grammar
 
+def FoundDepth(string):
+    string = string[:-1]
+    string = string[6:]
+    return int(string)
+
 def ReadFile(path):
     with open(path) as f:
         tree = f.readlines()
-        for line in tree:
-            print(line,end='')
     return tree
 
 def CountMax(tree):
@@ -44,6 +47,8 @@ def TraverseTree(img,tree,medium):
         currentX = medium
         currentX -= int(70 * len(lines)/2)
         for text in lines:
+            #           影像, 文字, 座標, 字型, 大小, 顏色, 線條寬度, 線條種類
+            #cv2.putText(emptyImg, 'test', (10, 40), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0), 1, cv2.LINE_AA)
             cv2.putText(img, text, (currentX, currentHeight), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0), 1, cv2.LINE_AA)
             tempTextWidth = len(text)
             currentX += (tempTextWidth * 11)
@@ -55,8 +60,19 @@ def main():
     height = len(tree)
     width = CountMax(tree)
     emptyImg, medium = CreateEmptyImg(height, width)
-    #           影像, 文字, 座標, 字型, 大小, 顏色, 線條寬度, 線條種類
-    #cv2.putText(emptyImg, 'test', (10, 40), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0), 1, cv2.LINE_AA)
+    newTree = []
+    for line in tree:
+        lines = line.split(' ')
+        print(lines)
+        depth = FoundDepth(lines[-2])
+        lines = lines[:-3]
+        if depth >= len(newTree):
+            newTree.append([lines])
+        else:
+            newTree[depth].append(lines)
+    
+    print(newTree)
+
     img = TraverseTree(emptyImg, tree,medium)
     cv2.imshow('My Image', img)
     cv2.waitKey(0)

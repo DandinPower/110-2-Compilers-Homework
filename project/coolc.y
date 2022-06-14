@@ -668,7 +668,7 @@ void TraverseTree(TreeNode *node, int currentDepth){
         printf("%s ", node->type);
         if(node->next != NULL) TraverseTree(node->next,currentDepth);
         else {
-                printf("reduce(%s %d) depth(%d)",node->grammar_type,node->grammar_number,node->depth);
+                printf("reduce(%s %d) depth(%d) ",node->grammar_type,node->grammar_number,node->depth);
                 printf("\n");
         }
         if(node->child_head != NULL) {
