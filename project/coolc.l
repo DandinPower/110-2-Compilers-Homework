@@ -74,6 +74,8 @@ int yywrap(void) {
 }
 
 void yyerror(const char *msg) {
-    printf("Error at line %d:\n\t%s\n", cur_line, msg);
+    printf("Parse Stopping...")
+    printf("Unknown Token\n");
+    printf("Error at line %d: %s\n", cur_line, msg);
     exit(1);
 }
