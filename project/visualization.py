@@ -63,15 +63,19 @@ def main():
     newTree = []
     for line in tree:
         lines = line.split(' ')
-        print(lines)
         depth = FoundDepth(lines[-2])
+        print(lines)
         lines = lines[:-3]
+        
         if depth >= len(newTree):
             newTree.append([lines])
         else:
             newTree[depth].append(lines)
     
-    print(newTree)
+    print(newTree[0])
+    print(newTree[1])
+    print(newTree[2])
+    print(newTree[3])
 
     img = TraverseTree(emptyImg, tree,medium)
     cv2.imshow('My Image', img)
