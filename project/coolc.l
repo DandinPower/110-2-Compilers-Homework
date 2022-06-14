@@ -2,14 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #define TEXT_LENGTH 80
-/* 以下為建立syntax tree的data structure */
-struct tree_node {
-        char text[TEXT_LENGTH];
-        char token[TEXT_LENGTH];
-        struct tree_node *leftPtr;
-        struct tree_node *rightPtr;
-};
-typedef struct tree_node TreeNode;
+void yyerror(const char *msg);
+int cur_line = 1;
 
 #include "y.tab.h"
 %}
@@ -17,7 +11,8 @@ typedef struct tree_node TreeNode;
 %%
 
 "-"             {strcpy(yylval.object.text,(yytext));return OPERATOR;}
-[ \t\v\f\r\n]*  {}
+[ \t\v\f\r]*  {}
+\n              {cur_line++;}
 "class"         {strcpy(yylval.object.text,(yytext));return CLASS;}
 "inherits"	    {strcpy(yylval.object.text,(yytext));return INHERITS;}
 "SELF_TYPE"	    {strcpy(yylval.object.text,(yytext));return SELF_TYPE;}
@@ -59,9 +54,15 @@ false|true      {strcpy(yylval.object.text,(yytext));return BOOLEAN;}
 "."             {strcpy(yylval.object.text,(yytext));return DOT;}
 ","             {strcpy(yylval.object.text,(yytext));return NEXT;}
 ":"             {strcpy(yylval.object.text,(yytext));return DEFINE;}
+.               {yyerror(yytext);}
 
 %%
 
 int yywrap(void) { 
     return 1;
+}
+
+void yyerror(const char *msg) {
+    printf("Error at line %d:\n\t%s\n", cur_line, msg);
+    exit(1);
 }
