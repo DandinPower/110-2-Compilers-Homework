@@ -11,8 +11,10 @@ struct tree_node {
         char text[TEXT_LENGTH];  //紀錄yytext
         char grammar_type[TEXT_LENGTH]; //紀錄用了哪個文法規則
         int grammar_number;     //紀錄用了文法規則的第幾個
+        int depth;      //記錄了在syntax tree的深度
         struct tree_node *child_head;   //記錄了所有子節點的開頭
         struct tree_node *next; //串接到下一個
+        
 };
 typedef struct tree_node TreeNode;
 
@@ -76,7 +78,7 @@ program :   clist       {
                 printf("\n\nSyntax Tree: \n\n");
                 SetTreeNode($1.node,"clist","NonTerminal","program",1);
                 root = $1.node;
-                TraverseTree(root);
+                TraverseTree(root,0);
                 }
         ;
 
@@ -661,15 +663,16 @@ void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int 
         node->next = NULL;
 }
 
-void TraverseTree(TreeNode *node){
+void TraverseTree(TreeNode *node, int currentDepth){
+        node->depth = currentDepth;
         printf("%s ", node->type);
-        if(node->next != NULL) TraverseTree(node->next);
+        if(node->next != NULL) TraverseTree(node->next,currentDepth);
         else {
-                printf("reduce(%s %d) ",node->grammar_type,node->grammar_number);
+                printf("reduce(%s %d) depth(%d)",node->grammar_type,node->grammar_number,node->depth);
                 printf("\n");
         }
         if(node->child_head != NULL) {
-                TraverseTree(node->child_head);
+                TraverseTree(node->child_head,currentDepth++);
         }
         
 }
