@@ -672,7 +672,7 @@ void TraverseTree(TreeNode *node, int currentDepth){
                 printf("\n");
         }
         if(node->child_head != NULL) {
-                TraverseTree(node->child_head,currentDepth++);
+                TraverseTree(node->child_head,++currentDepth);
         }
         
 }
