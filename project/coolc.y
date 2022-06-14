@@ -58,7 +58,8 @@ SymbolNode *Numbers;
 %token <object> CLASS BLOCKSTART BLOCKOVER ITEMSTART ITEMOVER SYNTAX_OVER TYPE_ID IDENTIFIER_ID DOT DEFINE 
 %token <object> INHERITS SELF_TYPE ASSIGN BOOLEAN IF THEN ELSE FI NOT WHILE LOOP CASE POOL OF ESAC DO NEW ISVOID
 %token <object> LET IN END OPERATOR DIGIT NEXT AT INT_COMP SELF
-%type <object> program clist class flist_opt flist feature formal_list formal block_list arguments_list arguments action_list action let_action expr 
+%type <object> program clist class flist_opt flist feature formal_list formal block_list 
+%type <object> arguments_list arguments action_list action let_action expr 
 %right ASSIGN NOT ISVOID INT_COMP
 %left AT DOT OPERATOR
 %%

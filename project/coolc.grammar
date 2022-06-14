@@ -1,0 +1,48 @@
+0 $accept: program $end
+1 program: clist
+2 clist: clist class SYNTAX_OVER
+3      | class SYNTAX_OVER
+4 class: CLASS TYPE_ID BLOCKSTART flist_opt BLOCKOVER
+5      | CLASS TYPE_ID INHERITS TYPE_ID BLOCKSTART flist_opt BLOCKOVER
+6 flist_opt: flist
+7          | %empty
+8 flist: flist feature SYNTAX_OVER
+9      | feature SYNTAX_OVER
+10 feature: IDENTIFIER_ID ITEMSTART formal_list ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER
+11        | IDENTIFIER_ID ITEMSTART ITEMOVER DEFINE TYPE_ID BLOCKSTART expr BLOCKOVER
+12        | IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr
+13        | IDENTIFIER_ID DEFINE TYPE_ID
+14 formal_list: formal_list NEXT formal
+15            | formal
+16 formal: IDENTIFIER_ID DEFINE TYPE_ID
+17 block_list: block_list expr SYNTAX_OVER
+18           | expr SYNTAX_OVER
+19 arguments_list: arguments
+20               | %empty
+21 arguments: arguments NEXT expr
+22          | expr
+23 action_list: action_list action
+24            | action
+25 action: IDENTIFIER_ID DEFINE TYPE_ID DO expr SYNTAX_OVER
+26 let_action: IDENTIFIER_ID DEFINE TYPE_ID IN BLOCKSTART block_list BLOCKOVER
+27           | IDENTIFIER_ID DEFINE TYPE_ID ASSIGN expr IN BLOCKSTART block_list BLOCKOVER
+28 expr: IDENTIFIER_ID
+29     | DIGIT
+30     | BOOLEAN
+31     | LETTER
+32     | SELF
+33     | BLOCKSTART block_list BLOCKOVER
+34     | IDENTIFIER_ID ASSIGN expr
+35     | expr DOT IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER
+36     | expr AT TYPE_ID DOT IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER
+37     | IDENTIFIER_ID ITEMSTART arguments_list ITEMOVER
+38     | expr OPERATOR expr
+39     | ITEMSTART expr ITEMOVER
+40     | IF expr THEN expr ELSE expr FI
+41     | WHILE expr LOOP expr POOL
+42     | LET let_action
+43     | CASE expr OF action_list ESAC
+44     | NEW TYPE_ID
+45     | ISVOID expr
+46     | NOT expr
+47     | INT_COMP expr
