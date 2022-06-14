@@ -22,7 +22,7 @@ TreeNode *MakeTreeNode(char *type, char *text, char *grammar_type, int grammar_n
 TreeNode *SetFatherNode(TreeNode *child_head);
 TreeNode *SetFatherEmpty();
 void SetTreeNode(TreeNode *node,char *type, char *text, char *grammar_type, int grammar_number);
-void TraverseTree(TreeNode *node);
+void TraverseTree(TreeNode *node, int currentDepth);
 
 TreeNode *root;
 
