@@ -5,6 +5,17 @@
 void yyerror(const char *msg);
 int cur_line = 1;
 
+/* 以下為建立syntax tree的data structure */
+struct tree_node {
+        char type[TEXT_LENGTH];  //紀錄nonterminal,Class,TypeID....
+        char text[TEXT_LENGTH];  //紀錄yytext
+        char grammar_type[TEXT_LENGTH]; //紀錄用了哪個文法規則
+        int grammar_number;     //紀錄用了文法規則的第幾個
+        struct tree_node *child_head;   //記錄了所有子節點的開頭
+        struct tree_node *next; //串接到下一個
+};
+typedef struct tree_node TreeNode;
+
 #include "y.tab.h"
 %}
 
